@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Secret Calculator</string>
+
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="title_activity_vault">VaultActivity</string>
+
+    <string name="title_activity_info">InfoActivity</string>
+
+    <string name="info_text">
+
+       Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi congue vitae nulla in finibus. Duis rhoncus egestas risus, vel porttitor purus eleifend ac. Integer tincidunt efficitur turpis, ut malesuada metus. Curabitur sed sem lorem. Vestibulum sed dictum neque. Nulla tincidunt dignissim massa, quis tristique tellus pulvinar ut. Duis ut vulputate neque, et dignissim nulla. Donec id mauris erat.
+
+Cras lacinia egestas sapien vel pharetra. Ut id tellus augue. Curabitur at nisl eget tortor feugiat eleifend. Fusce nec pulvinar tellus. Suspendisse egestas magna vel nunc accumsan viverra. In mi quam, tincidunt id metus id, rutrum tincidunt sem. Vestibulum feugiat congue nibh, eu ultricies purus imperdiet vel. Curabitur consectetur ipsum et lectus ornare, vel pellentesque elit ultrices. Nam finibus molestie erat aliquet suscipit. Nunc semper, ante id interdum dictum, ligula nibh congue mi, at finibus dui risus sit amet nisi. Nunc et mauris eros. Proin sagittis auctor nibh sit amet faucibus. Quisque finibus enim vel dignissim congue.
+
+Vestibulum vitae nisi eu magna tincidunt imperdiet eget ut lorem. Donec dolor turpis, dignissim a scelerisque quis, blandit at risus. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Maecenas a dui nec ex consequat vestibulum eget sed nibh. Mauris finibus dui eu nibh euismod sollicitudin. Fusce malesuada, velit a molestie venenatis, erat leo accumsan eros, in fringilla sem nisl at metus. Pellentesque nec convallis libero, sit amet consequat ipsum. Nunc neque libero, pretium in pellentesque vitae, mattis at tortor. In tempor lacus quis enim sodales volutpat. Etiam sit amet felis turpis.
+
+Sed vestibulum enim sem, in maximus leo semper rutrum. Vestibulum sed fermentum neque. Duis enim justo, malesuada sed est ac, aliquet blandit elit. Fusce eget purus elementum, dapibus nulla vitae, bibendum mi. Nunc nunc elit, tristique laoreet neque eu, convallis blandit odio. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Morbi rutrum erat non erat rhoncus laoreet. Aliquam finibus rutrum libero, vel scelerisque dolor rutrum eget. Suspendisse ante libero, volutpat iaculis posuere sit amet, cursus vitae elit. Nulla odio mauris, eleifend eu libero et, cursus semper erat.
+
+Maecenas odio purus, pulvinar ut auctor at, imperdiet et arcu. Nunc cursus massa orci. Ut euismod erat a nisi suscipit convallis. Vivamus posuere elit justo, in mollis lectus elementum eget. Sed sodales aliquet diam, vitae rhoncus neque scelerisque et. Donec commodo luctus ex, dignissim tincidunt neque. Integer quis metus est. Suspendisse non lectus magna. Aenean volutpat faucibus nisl id viverra. In at volutpat dui. Ut quis velit molestie, blandit eros vel, mollis turpis. Phasellus a felis porttitor, iaculis leo at, lacinia neque. Phasellus vitae velit quis erat gravida dictum sit amet nec libero. Curabitur faucibus efficitur nisi, nec consectetur sem sollicitudin nec. Curabitur pretium quam mattis, rhoncus libero ac, iaculis quam.
+
+Nunc pharetra rutrum sollicitudin. Phasellus varius quis odio in malesuada. Nulla ipsum lorem, egestas sit amet euismod et, dapibus at est. Nam sollicitudin hendrerit augue quis feugiat. Vestibulum vitae rutrum enim. In hac habitasse platea dictumst. Suspendisse eget justo eu odio venenatis sagittis a vel lorem.
+
+Sed egestas sit amet justo et ultrices. Integer sit amet est mollis enim convallis elementum. Vestibulum non sagittis eros. Mauris pellentesque enim molestie, aliquam dui et, accumsan dui. Mauris sit amet tempor orci. Interdum et malesuada fames ac ante ipsum primis in faucibus. Mauris consequat urna vitae libero viverra laoreet. Phasellus euismod orci id sem congue condimentum. Morbi volutpat erat quis nisi blandit tristique. Morbi ornare dictum ex quis imperdiet. Donec sed mi eget est rutrum hendrerit non vel odio. Aenean at libero eu turpis lacinia dignissim nec et leo. Donec id vestibulum nisl. Fusce bibendum urna quis dictum imperdiet.
+
+Vivamus non nisl quis mi blandit cursus. Nam neque libero, ultrices sit amet felis quis, volutpat pretium enim. Quisque ullamcorper erat risus, sed malesuada nunc venenatis ut. Cras lectus mi, pharetra et molestie scelerisque, varius et justo. Nulla eleifend eleifend dictum. Integer ultricies enim sit amet pharetra tristique. Phasellus ornare justo vel nisi vehicula, nec mattis felis pellentesque. Maecenas quis dictum eros.
+        </string>
+
+    <string name="title_activity_notes">Notes</string>
+    <string name="note_date"> </string>
+    <string name="note_content"> </string>
+    <string name="note_file_name"> </string>
+
+
+    <string name="title_activity_list_item_note">ListItemNoteActivity</string>
+
+    <string name="title_activity_media">MediaActivity</string>
+</resources>
