@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
-
+import com.example.eugene.secretcalculator.Classes.Calculator.CalculatorBrain;
 import com.example.eugene.secretcalculator.R;
 
 public class CalculatorActivity extends AppCompatActivity {
@@ -20,6 +20,7 @@ public class CalculatorActivity extends AppCompatActivity {
     private static boolean isFirstOperandSet = false;
     private static boolean isFirstOperandNegative = false;
     private static boolean isSecondOperandNegative = false;
+    private CalculatorBrain cb;
 
 
     @Override
