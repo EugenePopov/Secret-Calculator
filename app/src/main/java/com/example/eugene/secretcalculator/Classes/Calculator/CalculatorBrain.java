@@ -3,7 +3,6 @@ package com.example.eugene.secretcalculator.Classes.Calculator;
 
  public abstract class CalculatorBrain {
 
-
     protected float firstOperand;
     protected float secondOperand;
     protected String operation;
@@ -15,26 +14,12 @@ package com.example.eugene.secretcalculator.Classes.Calculator;
         operation = "";
     }
 
-/*    private void computeSum(){
-        result = firstOperand + secondOperand;
-    }
 
-    private void computeSubstraction(){
-        result = firstOperand - secondOperand;
-    }
+     public abstract void compute();
+     public abstract void setFirstOperand(float firstOperand);
+     public abstract void setSecondOperand(float secondOperand);
+     public abstract void setOperation(String operation);
+     public abstract float getResult();
 
-    private void computeDivision(){
-        result = firstOperand / secondOperand;
-    }
-
-    private void computeMultiplication(){
-        result = firstOperand * secondOperand;
-    }
-
-    private void computePercentage(){
-        result = firstOperand * (secondOperand/100);
-    }*/
-
-    abstract void compute();
 
 }

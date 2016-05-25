@@ -1,33 +1,31 @@
 package com.example.eugene.secretcalculator.Activities;
 
-import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
-import com.example.eugene.secretcalculator.Classes.Calculator.CalculatorBrain;
+import com.example.eugene.secretcalculator.Classes.Calculator.*;
 import com.example.eugene.secretcalculator.R;
 
 public class CalculatorActivity extends AppCompatActivity {
 
-
-    private static String firstOperand = "";
+    private CalculatorBrain calculatorEntity;
+    private static String firstOperand = "0";
     private static String secondOperand = "";
-    private static String inputOperation = "";
+    private static String inputOperation = " ";
     private static boolean isDotUsed = false;
     private static boolean isFirstOperandSet = false;
     private static boolean isFirstOperandNegative = false;
     private static boolean isSecondOperandNegative = false;
-    private CalculatorBrain cb;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
         hideNavigationBar();
+        showOnDisplay(firstOperand, inputOperation);
     }
 
     private void hideNavigationBar() {
@@ -37,6 +35,7 @@ public class CalculatorActivity extends AppCompatActivity {
 
     /** Process digit buttons **/
     public void onButton0Click(View view){
+        if(firstOperand.equals(0))firstOperand = "";
         if(!isFirstOperandSet) {
             if (firstOperand.length() < 11) firstOperand += "0";
             showOnDisplay(firstOperand, inputOperation);
@@ -48,6 +47,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButton1Click(View view){
+        if(firstOperand.equals("0"))firstOperand = "";
+
         if(!isFirstOperandSet) {
             if (firstOperand.length() < 11) firstOperand += "1";
             showOnDisplay(firstOperand, inputOperation);
@@ -59,6 +60,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButton2Click(View view){
+        if(firstOperand.equals("0"))firstOperand = "";
+
         if(!isFirstOperandSet) {
             if (firstOperand.length() < 11) firstOperand += "2";
             showOnDisplay(firstOperand, inputOperation);
@@ -70,6 +73,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButton3Click(View view){
+        if(firstOperand.equals("0"))firstOperand = "";
+
         if(!isFirstOperandSet) {
             if (firstOperand.length() < 11) firstOperand += "3";
             showOnDisplay(firstOperand, inputOperation);
@@ -81,6 +86,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButton4Click(View view){
+        if(firstOperand.equals("0"))firstOperand = "";
+
         if(!isFirstOperandSet) {
             if (firstOperand.length() < 11) firstOperand += "4";
             showOnDisplay(firstOperand, inputOperation);
@@ -92,6 +99,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButton5Click(View view){
+        if(firstOperand.equals("0"))firstOperand = "";
+
         if(!isFirstOperandSet) {
             if (firstOperand.length() < 11) firstOperand += "5";
             showOnDisplay(firstOperand, inputOperation);
@@ -103,6 +112,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButton6Click(View view){
+        if(firstOperand.equals("0"))firstOperand = "";
+
         if(!isFirstOperandSet) {
             if (firstOperand.length() < 11) firstOperand += "6";
             showOnDisplay(firstOperand, inputOperation);
@@ -114,6 +125,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButton7Click(View view){
+        if(firstOperand.equals("0"))firstOperand = "";
+
         if(!isFirstOperandSet) {
             if (firstOperand.length() < 11) firstOperand += "7";
             showOnDisplay(firstOperand, inputOperation);
@@ -125,6 +138,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButton8Click(View view){
+        if(firstOperand.equals("0"))firstOperand = "";
+
         if(!isFirstOperandSet) {
             if (firstOperand.length() < 11) firstOperand += "8";
             showOnDisplay(firstOperand, inputOperation);
@@ -136,6 +151,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButton9Click(View view){
+        if(firstOperand.equals("0"))firstOperand = "";
+
         if(!isFirstOperandSet) {
             if (firstOperand.length() < 11) firstOperand += "9";
             showOnDisplay(firstOperand, inputOperation);
@@ -152,30 +169,32 @@ public class CalculatorActivity extends AppCompatActivity {
         StringBuilder secondOperandBuilder = new StringBuilder(secondOperand);
 
         if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11 && firstOperand.length() >= 1 && !firstOperand.equals("0")){
+            if (firstOperand.length() < 11 && firstOperand.length() >= 1 && Float.parseFloat(firstOperand)!=0){
                 if(!isFirstOperandNegative){
                     firstOperand = firstOperandBuilder.insert(0, "-").toString();
                     isFirstOperandNegative = true;
+                    showOnDisplay(firstOperand, inputOperation);
                 }
                 else{
                     firstOperand = firstOperandBuilder.deleteCharAt(0).toString();
                     isFirstOperandNegative = false;
+                    showOnDisplay(firstOperand, inputOperation);
                 }
             }
-            showOnDisplay(firstOperand, inputOperation);
         }
         else{
-            if (secondOperand.length() < 11 && secondOperand.length() >= 1 && !secondOperand.equals("0")){
+            if (secondOperand.length() < 11 && secondOperand.length() >= 1 && Float.parseFloat(secondOperand)!=0){
                 if(!isSecondOperandNegative){
                     secondOperand = secondOperandBuilder.insert(0, "-").toString();
                     isSecondOperandNegative = true;
+                    showOnDisplay(secondOperand, inputOperation);
                 }
                 else{
                     secondOperand = secondOperandBuilder.deleteCharAt(0).toString();
                     isSecondOperandNegative = false;
+                    showOnDisplay(secondOperand, inputOperation);
                 }
             }
-            showOnDisplay(secondOperand, inputOperation);
         }
     }
 
@@ -200,46 +219,62 @@ public class CalculatorActivity extends AppCompatActivity {
     public void onButtonPlusClick(View view){
         isFirstOperandSet = true;
         isDotUsed = false;
-        if(inputOperation.length()<1 && firstOperand.length()>0) inputOperation += "+";
-        showOnDisplay(firstOperand, inputOperation);
+        if(inputOperation.length()==1 && firstOperand.length()>0){
+            calculatorEntity = new Sum();
+            inputOperation = inputOperation.replace(inputOperation.charAt(0), '+');
+            showOnDisplay(firstOperand, inputOperation);
+        }
     }
 
     public void onButtonMinusClick(View view){
         isFirstOperandSet = true;
         isDotUsed = false;
-        if(inputOperation.length()<1 && firstOperand.length()>0) inputOperation += "-";
-        showOnDisplay(firstOperand, inputOperation);
+        if(inputOperation.length()==1 && firstOperand.length()>0){
+            calculatorEntity = new Subtraction();
+            inputOperation = inputOperation.replace(inputOperation.charAt(0), '-');
+            showOnDisplay(firstOperand, inputOperation);
+        }
     }
 
     public void onButtonMultiplyClick(View view){
         isFirstOperandSet = true;
         isDotUsed = false;
-        if(inputOperation.length()<1 && firstOperand.length()>0) inputOperation += "x";
-        showOnDisplay(firstOperand, inputOperation);
+        if(inputOperation.length()==1 && firstOperand.length()>0){
+            calculatorEntity = new Multiplication();
+            inputOperation = inputOperation.replace(inputOperation.charAt(0), 'x');
+            showOnDisplay(firstOperand, inputOperation);
+        }
     }
 
     public void onButtonDivideClick(View view){
         isFirstOperandSet = true;
         isDotUsed = false;
-        if(inputOperation.length()<1 && firstOperand.length()>0) inputOperation += "/";
-        showOnDisplay(firstOperand, inputOperation);
+        if(inputOperation.length()==1 && firstOperand.length()>0){
+            calculatorEntity = new Division();
+            inputOperation = inputOperation.replace(inputOperation.charAt(0), '/');
+            showOnDisplay(firstOperand, inputOperation);
+        }
     }
 
     public void onButtonPercentClick(View view){
         isFirstOperandSet = true;
         isDotUsed = false;
-        if(inputOperation.length()<1 && firstOperand.length()>0) inputOperation += "%";
-        showOnDisplay(firstOperand, inputOperation);
+        if(inputOperation.length()==1 && firstOperand.length()>0){
+            calculatorEntity = new Percent();
+            inputOperation = inputOperation.replace(inputOperation.charAt(0), '%');
+            showOnDisplay(firstOperand, inputOperation);
+        }
     }
 
     public void onButtonClearClick(View view){
-        if (firstOperand != null && firstOperand.length() > 0 ) {
-            firstOperand = "";
+
+        if (firstOperand.length() > 0 ) {
+            firstOperand = "0";
         }
-        if (inputOperation != null && inputOperation.length() > 0 ) {
-            inputOperation = "";
+        if (inputOperation.length() > 0 ) {
+            inputOperation = " ";
         }
-        if (secondOperand != null && secondOperand.length() > 0 ) {
+        if (secondOperand.length() > 0 ) {
             secondOperand = "";
         }
 
@@ -251,8 +286,18 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButtonEqualClick(View view){
-        Intent intent = new Intent(this, VaultActivity.class);
-        startActivity(intent);
+        if(secondOperand.length()>0) {
+            calculatorEntity.setFirstOperand(Float.parseFloat(firstOperand));
+            calculatorEntity.setSecondOperand(Float.parseFloat(secondOperand));
+            calculatorEntity.setOperation(inputOperation);
+            calculatorEntity.compute();
+            Float result = calculatorEntity.getResult();
+            processResult(result);
+            showOnDisplay(firstOperand, inputOperation);
+        }
+//        showOnDisplay(result.toString(), " ");
+/*        Intent intent = new Intent(this, VaultActivity.class);
+        startActivity(intent);*/
     }
 
     /** Additional methods **/
@@ -260,11 +305,12 @@ public class CalculatorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fullscreen);
 
         TextView digitalScreen = (TextView) findViewById(R.id.textView);
-        setTextHeight(digitalScreen);
-        digitalScreen.setText(number);
-
         TextView operationScreen = (TextView) findViewById(R.id.textView1);
-        setTextHeight(operationScreen);
+
+//        setTextHeight(operationScreen);
+//        setTextHeight(digitalScreen);
+
+        digitalScreen.setText(number);
         operationScreen.setText(operation);
     }
 
@@ -283,6 +329,37 @@ public class CalculatorActivity extends AppCompatActivity {
             });
         }
 
+    }
+
+    public boolean isResultInteger(Float result){
+        String floatingValue;
+        floatingValue = result.toString().substring(result.toString().indexOf(".")+1, result.toString().length());
+        return floatingValue.equals("0");
+    }
+
+    public boolean isResultNegative(Float result){
+        return result<0;
+    }
+
+    public void processResult(Float result){
+        if(isResultInteger(result)){
+            firstOperand = result.toString().substring(0, result.toString().indexOf("."));
+            isDotUsed = false;
+        }
+        else{
+            firstOperand = result.toString();
+            isDotUsed = true;
+        }
+        if(isResultNegative(result)){
+            isFirstOperandNegative = true;
+        }
+        else{
+            isFirstOperandNegative = false;
+        }
+        isFirstOperandSet = true;
+        isSecondOperandNegative = false;
+        secondOperand = "";
+        inputOperation = " ";
     }
 
 }
