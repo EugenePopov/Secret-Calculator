@@ -16,7 +16,7 @@
         android:weightSum="2"
         android:id="@+id/linearLayout1"
 
-        >
+        android:background="@drawable/result_screen">
 
         <TextView
             android:layout_width="match_parent"
@@ -27,11 +27,10 @@
             android:background="@color/accent_material_light"
             android:textAlignment="textEnd"
             android:textColor="@android:color/white"
-            android:gravity="end"
-            android:textSize="30dp"
             android:textIsSelectable="false"
             android:paddingRight="6dp"
-            android:paddingLeft="6dp" />
+            android:paddingLeft="6dp"
+            android:gravity="center_vertical|end" />
 
         <TextView
             android:layout_width="match_parent"
@@ -42,9 +41,8 @@
             android:background="@color/accent_material_light"
             android:textAlignment="textEnd"
             android:textColor="@android:color/white"
-            android:gravity="end"
-            android:textSize="30dp"
-            android:textIsSelectable="false"
+            android:gravity="center_vertical|end"
+            android:textIsSelectable="true"
             android:paddingRight="6dp"
             android:paddingLeft="6dp" />
     </LinearLayout>
@@ -69,21 +67,24 @@
             android:layout_weight="1"
             android:layout_height="fill_parent"
             android:id="@+id/buttonPlusMinus"
-            android:background="@drawable/button_plus_minus" />
+            android:background="@drawable/button_plus_minus"
+            android:onClick="onButtonPlusMinusClick" />
 
         <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="fill_parent"
             android:id="@+id/buttonPercent"
-            android:background="@drawable/button_percent" />
+            android:background="@drawable/button_percent"
+            android:onClick="onButtonPercentClick" />
 
         <ImageButton
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="fill_parent"
             android:id="@+id/buttonDivide"
-            android:background="@drawable/button_divide" />
+            android:background="@drawable/button_divide"
+            android:onClick="onButtonDivideClick" />
     </LinearLayout>
 
     <LinearLayout
@@ -122,7 +123,8 @@
             android:layout_weight="1"
             android:layout_height="fill_parent"
             android:id="@+id/buttonMultiply"
-            android:background="@drawable/button_multiply" />
+            android:background="@drawable/button_multiply"
+            android:onClick="onButtonMultiplyClick" />
     </LinearLayout>
 
     <LinearLayout
@@ -161,7 +163,8 @@
             android:layout_weight="1"
             android:layout_height="fill_parent"
             android:id="@+id/buttonMinus"
-            android:background="@drawable/button_minus" />
+            android:background="@drawable/button_minus"
+            android:onClick="onButtonMinusClick" />
     </LinearLayout>
 
     <LinearLayout
@@ -200,7 +203,8 @@
             android:layout_weight="1"
             android:layout_height="fill_parent"
             android:id="@+id/buttonPlus"
-            android:background="@drawable/button_plus" />
+            android:background="@drawable/button_plus"
+            android:onClick="onButtonPlusClick" />
     </LinearLayout>
 
     <LinearLayout
