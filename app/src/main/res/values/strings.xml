@@ -36,4 +36,6 @@ Vivamus non nisl quis mi blandit cursus. Nam neque libero, ultrices sit amet fel
     <string name="title_activity_list_item_note">ListItemNoteActivity</string>
 
     <string name="title_activity_media">MediaActivity</string>
+
+    <string name="title_activity_first_launch">FirstLaunchActivity</string>
 </resources>

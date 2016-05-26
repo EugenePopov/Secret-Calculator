@@ -16,13 +16,7 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:theme="@style/FullscreenTheme"></activity>
         <activity
             android:name=".Activities.VaultActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -52,11 +46,22 @@
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_media"
             android:screenOrientation="portrait"
-            android:theme="@style/FullscreenTheme"></activity>
+            android:theme="@style/FullscreenTheme" />
+        <activity
+            android:name=".Activities.NewAlbumPopUp"
+            android:theme="@style/AppTheme.CustomTheme"></activity>
+        <activity android:name=".Activities.MyRootActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-        <activity android:name=".Activities.NewAlbumPopUp"
-            android:theme="@style/AppTheme.CustomTheme">
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
+        <activity
+            android:name=".Activities.FirstLaunchActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_first_launch"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>

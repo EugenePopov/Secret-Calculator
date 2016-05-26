@@ -58,6 +58,12 @@ public class NotesActivity extends AppCompatActivity implements AdapterView.OnIt
             initializeListView();
             isNoteContentChanged = false;
         }
+
+            super.onRestart();
+            Intent i = new Intent(this,CalculatorActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+
     }
 
     private void hideNavigationBar() {

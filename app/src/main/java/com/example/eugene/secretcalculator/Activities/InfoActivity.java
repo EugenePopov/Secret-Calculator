@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.eugene.secretcalculator.Classes.Note;
 import com.example.eugene.secretcalculator.R;
 
 
@@ -19,7 +20,12 @@ public class InfoActivity extends AppCompatActivity {
 
         hideNavigationBar();
     }
-
+    protected void onRestart(){
+        super.onRestart();
+        Intent i = new Intent(this,CalculatorActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
     private void hideNavigationBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();

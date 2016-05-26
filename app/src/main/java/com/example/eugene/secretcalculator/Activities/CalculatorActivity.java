@@ -11,10 +11,8 @@ import android.widget.TextView;
 import com.example.eugene.secretcalculator.Classes.Calculator.*;
 import com.example.eugene.secretcalculator.Classes.Encriptor;
 import com.example.eugene.secretcalculator.R;
-
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+
 
 public class CalculatorActivity extends AppCompatActivity {
 

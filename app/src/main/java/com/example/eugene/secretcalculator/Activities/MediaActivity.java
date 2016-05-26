@@ -18,6 +18,14 @@ public class MediaActivity extends AppCompatActivity {
         hideNavigationBar();
 
     }
+
+    protected void onRestart(){
+        super.onRestart();
+        Intent i = new Intent(this,CalculatorActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
+
     private void hideNavigationBar() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
