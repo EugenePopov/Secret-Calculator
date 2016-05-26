@@ -1,5 +1,7 @@
 package com.example.eugene.secretcalculator.Activities;
 
+import android.content.Intent;
+import android.os.Environment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,7 +9,12 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import com.example.eugene.secretcalculator.Classes.Calculator.*;
+import com.example.eugene.secretcalculator.Classes.Encriptor;
 import com.example.eugene.secretcalculator.R;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class CalculatorActivity extends AppCompatActivity {
 
@@ -15,10 +22,12 @@ public class CalculatorActivity extends AppCompatActivity {
     private static String firstOperand = "0";
     private static String secondOperand = "";
     private static String inputOperation = " ";
-    private static boolean isDotUsed = false;
-    private static boolean isFirstOperandSet = false;
-    private static boolean isFirstOperandNegative = false;
-    private static boolean isSecondOperandNegative = false;
+    private static String inputBuffer = "";
+    private static boolean isDotUsed ;
+    private static boolean isFirstOperandSet ;
+    private static boolean isFirstOperandNegative ;
+    private static boolean isSecondOperandNegative ;
+    private static boolean isResultObtained;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +35,21 @@ public class CalculatorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_fullscreen);
         hideNavigationBar();
         showOnDisplay(firstOperand, inputOperation);
+
+        Encriptor e = new Encriptor();
+        e.encryptString();
+        e.writeToFile();
+
+    }
+
+    @Override
+    protected  void onResume(){
+        super.onResume();
+        isDotUsed = false;
+        isFirstOperandSet = false;
+        isFirstOperandNegative = false;
+        isSecondOperandNegative = false;
+        isResultObtained = false;
     }
 
     private void hideNavigationBar() {
@@ -35,131 +59,163 @@ public class CalculatorActivity extends AppCompatActivity {
 
     /** Process digit buttons **/
     public void onButton0Click(View view){
-        if(firstOperand.equals(0))firstOperand = "";
-        if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11) firstOperand += "0";
-            showOnDisplay(firstOperand, inputOperation);
-        }
-        else{
-            if (secondOperand.length() < 11) secondOperand += "0";
-            showOnDisplay(secondOperand, inputOperation);
+        if(!isResultObtained) {
+            inputBuffer += "0";
+            if (!isFirstOperandSet) {
+                if (firstOperand.equals(0)) firstOperand = "";
+
+                if (firstOperand.length() < 11) firstOperand += "0";
+                showOnDisplay(firstOperand, inputOperation);
+            } else {
+                if (secondOperand.length() < 11) secondOperand += "0";
+                showOnDisplay(secondOperand, inputOperation);
+            }
         }
     }
 
     public void onButton1Click(View view){
-        if(firstOperand.equals("0"))firstOperand = "";
-
-        if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11) firstOperand += "1";
-            showOnDisplay(firstOperand, inputOperation);
-        }
-        else{
-            if (secondOperand.length() < 11) secondOperand += "1";
-            showOnDisplay(secondOperand, inputOperation);
+        if(!isResultObtained) {
+            inputBuffer += "1";
+            if (!isFirstOperandSet) {
+                if (firstOperand.equals("0")) firstOperand = "";
+                if (firstOperand.length() < 11) firstOperand += "1";
+                showOnDisplay(firstOperand, inputOperation);
+            } else {
+                if (secondOperand.length() < 11) secondOperand += "1";
+                showOnDisplay(secondOperand, inputOperation);
+            }
         }
     }
 
     public void onButton2Click(View view){
-        if(firstOperand.equals("0"))firstOperand = "";
+        if(!isResultObtained) {
 
-        if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11) firstOperand += "2";
-            showOnDisplay(firstOperand, inputOperation);
-        }
-        else{
-            if (secondOperand.length() < 11) secondOperand += "2";
-            showOnDisplay(secondOperand, inputOperation);
+            inputBuffer += "2";
+
+            if (!isFirstOperandSet) {
+                if (firstOperand.equals("0")) firstOperand = "";
+                if (firstOperand.length() < 11) firstOperand += "2";
+                showOnDisplay(firstOperand, inputOperation);
+            } else {
+                if (secondOperand.length() < 11) secondOperand += "2";
+                showOnDisplay(secondOperand, inputOperation);
+            }
         }
     }
 
     public void onButton3Click(View view){
-        if(firstOperand.equals("0"))firstOperand = "";
+        if(!isResultObtained) {
 
-        if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11) firstOperand += "3";
-            showOnDisplay(firstOperand, inputOperation);
-        }
-        else{
-            if (secondOperand.length() < 11) secondOperand += "3";
-            showOnDisplay(secondOperand, inputOperation);
+            inputBuffer += "3";
+
+
+            if (!isFirstOperandSet) {
+                if (firstOperand.equals("0")) firstOperand = "";
+
+                if (firstOperand.length() < 11) firstOperand += "3";
+                showOnDisplay(firstOperand, inputOperation);
+            } else {
+                if (secondOperand.length() < 11) secondOperand += "3";
+                showOnDisplay(secondOperand, inputOperation);
+            }
         }
     }
 
     public void onButton4Click(View view){
-        if(firstOperand.equals("0"))firstOperand = "";
+        if(!isResultObtained) {
 
-        if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11) firstOperand += "4";
-            showOnDisplay(firstOperand, inputOperation);
-        }
-        else{
-            if (secondOperand.length() < 11) secondOperand += "4";
-            showOnDisplay(secondOperand, inputOperation);
+            inputBuffer += "4";
+
+            if (!isFirstOperandSet) {
+                if (firstOperand.equals("0")) firstOperand = "";
+
+                if (firstOperand.length() < 11) firstOperand += "4";
+                showOnDisplay(firstOperand, inputOperation);
+            } else {
+                if (secondOperand.length() < 11) secondOperand += "4";
+                showOnDisplay(secondOperand, inputOperation);
+            }
         }
     }
 
     public void onButton5Click(View view){
-        if(firstOperand.equals("0"))firstOperand = "";
+        if(!isResultObtained) {
 
-        if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11) firstOperand += "5";
-            showOnDisplay(firstOperand, inputOperation);
-        }
-        else{
-            if (secondOperand.length() < 11) secondOperand += "5";
-            showOnDisplay(secondOperand, inputOperation);
+            inputBuffer += "5";
+
+
+            if (!isFirstOperandSet) {
+                if (firstOperand.equals("0")) firstOperand = "";
+                if (firstOperand.length() < 11) firstOperand += "5";
+                showOnDisplay(firstOperand, inputOperation);
+            } else {
+                if (secondOperand.length() < 11) secondOperand += "5";
+                showOnDisplay(secondOperand, inputOperation);
+            }
         }
     }
 
     public void onButton6Click(View view){
-        if(firstOperand.equals("0"))firstOperand = "";
+        if(!isResultObtained) {
 
-        if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11) firstOperand += "6";
-            showOnDisplay(firstOperand, inputOperation);
-        }
-        else{
-            if (secondOperand.length() < 11) secondOperand += "6";
-            showOnDisplay(secondOperand, inputOperation);
+            inputBuffer += "6";
+
+            if (!isFirstOperandSet) {
+                if (firstOperand.equals("0")) firstOperand = "";
+                if (firstOperand.length() < 11) firstOperand += "6";
+                showOnDisplay(firstOperand, inputOperation);
+            } else {
+                if (secondOperand.length() < 11) secondOperand += "6";
+                showOnDisplay(secondOperand, inputOperation);
+            }
         }
     }
 
     public void onButton7Click(View view){
-        if(firstOperand.equals("0"))firstOperand = "";
+        if(!isResultObtained) {
 
-        if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11) firstOperand += "7";
-            showOnDisplay(firstOperand, inputOperation);
-        }
-        else{
-            if (secondOperand.length() < 11) secondOperand += "7";
-            showOnDisplay(secondOperand, inputOperation);
+            inputBuffer += "7";
+
+            if (!isFirstOperandSet) {
+                if (firstOperand.equals("0")) firstOperand = "";
+                if (firstOperand.length() < 11) firstOperand += "7";
+                showOnDisplay(firstOperand, inputOperation);
+            } else {
+                if (secondOperand.length() < 11) secondOperand += "7";
+                showOnDisplay(secondOperand, inputOperation);
+            }
         }
     }
 
     public void onButton8Click(View view){
-        if(firstOperand.equals("0"))firstOperand = "";
+        if(!isResultObtained) {
 
-        if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11) firstOperand += "8";
-            showOnDisplay(firstOperand, inputOperation);
-        }
-        else{
-            if (secondOperand.length() < 11) secondOperand += "8";
-            showOnDisplay(secondOperand, inputOperation);
+            inputBuffer += "8";
+
+            if (!isFirstOperandSet) {
+                if (firstOperand.equals("0")) firstOperand = "";
+                if (firstOperand.length() < 11) firstOperand += "8";
+                showOnDisplay(firstOperand, inputOperation);
+            } else {
+                if (secondOperand.length() < 11) secondOperand += "8";
+                showOnDisplay(secondOperand, inputOperation);
+            }
         }
     }
 
     public void onButton9Click(View view){
-        if(firstOperand.equals("0"))firstOperand = "";
+        if(!isResultObtained) {
 
-        if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11) firstOperand += "9";
-            showOnDisplay(firstOperand, inputOperation);
-        }
-        else{
-            if (secondOperand.length() < 11) secondOperand += "9";
-            showOnDisplay(secondOperand, inputOperation);
+            inputBuffer += "9";
+
+            if (!isFirstOperandSet) {
+                if (firstOperand.equals("0")) firstOperand = "";
+                if (firstOperand.length() < 11) firstOperand += "9";
+                showOnDisplay(firstOperand, inputOperation);
+            } else {
+                if (secondOperand.length() < 11) secondOperand += "9";
+                showOnDisplay(secondOperand, inputOperation);
+            }
         }
     }
 
@@ -199,24 +255,30 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButtonDotClick(View view){
-        if(!isFirstOperandSet) {
-            if (firstOperand.length() < 11 && !isDotUsed && firstOperand.length()>=1){
-                firstOperand += ".";
-                isDotUsed = true;
+        if(!isResultObtained) {
+
+            inputBuffer += ".";
+
+            if (!isFirstOperandSet) {
+                if (firstOperand.length() < 11 && !isDotUsed && firstOperand.length() >= 1) {
+                    firstOperand += ".";
+                    isDotUsed = true;
+                }
+                showOnDisplay(firstOperand, inputOperation);
+            } else {
+                if (secondOperand.length() < 11 && !isDotUsed && secondOperand.length() >= 1) {
+                    secondOperand += ".";
+                    isDotUsed = true;
+                }
+                showOnDisplay(secondOperand, inputOperation);
             }
-            showOnDisplay(firstOperand, inputOperation);
-        }
-        else{
-            if (secondOperand.length() < 11 && !isDotUsed && secondOperand.length()>=1){
-                secondOperand += ".";
-                isDotUsed = true;
-            }
-            showOnDisplay(secondOperand, inputOperation);
         }
     }
 
     /** Process operation buttons **/
     public void onButtonPlusClick(View view){
+        inputBuffer += "+";
+        isResultObtained = false;
         isFirstOperandSet = true;
         isDotUsed = false;
         if(inputOperation.length()==1 && firstOperand.length()>0){
@@ -227,6 +289,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButtonMinusClick(View view){
+        inputBuffer += "-";
+        isResultObtained = false;
         isFirstOperandSet = true;
         isDotUsed = false;
         if(inputOperation.length()==1 && firstOperand.length()>0){
@@ -237,6 +301,8 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButtonMultiplyClick(View view){
+        inputBuffer += "x";
+        isResultObtained = false;
         isFirstOperandSet = true;
         isDotUsed = false;
         if(inputOperation.length()==1 && firstOperand.length()>0){
@@ -247,6 +313,9 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButtonDivideClick(View view){
+        inputBuffer += "/";
+        isResultObtained = false;
+
         isFirstOperandSet = true;
         isDotUsed = false;
         if(inputOperation.length()==1 && firstOperand.length()>0){
@@ -257,6 +326,9 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButtonPercentClick(View view){
+        inputBuffer += "%";
+        isResultObtained = false;
+
         isFirstOperandSet = true;
         isDotUsed = false;
         if(inputOperation.length()==1 && firstOperand.length()>0){
@@ -267,6 +339,7 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButtonClearClick(View view){
+        isResultObtained = false;
 
         if (firstOperand.length() > 0 ) {
             firstOperand = "0";
@@ -286,18 +359,26 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButtonEqualClick(View view){
-        if(secondOperand.length()>0) {
-            calculatorEntity.setFirstOperand(Float.parseFloat(firstOperand));
-            calculatorEntity.setSecondOperand(Float.parseFloat(secondOperand));
-            calculatorEntity.setOperation(inputOperation);
-            calculatorEntity.compute();
-            Float result = calculatorEntity.getResult();
-            processResult(result);
-            showOnDisplay(firstOperand, inputOperation);
+        Encriptor e = new Encriptor();
+        if(e.compareStrings(getPassword())){
+            inputBuffer = "0";
+            firstOperand = "0";
+            inputOperation = " ";
+            openVault();
         }
-//        showOnDisplay(result.toString(), " ");
-/*        Intent intent = new Intent(this, VaultActivity.class);
-        startActivity(intent);*/
+        else {
+            if (secondOperand.length() > 0) {
+                calculatorEntity.setFirstOperand(Float.parseFloat(firstOperand));
+                calculatorEntity.setSecondOperand(Float.parseFloat(secondOperand));
+                calculatorEntity.setOperation(inputOperation);
+                calculatorEntity.compute();
+                Float result = calculatorEntity.getResult();
+                processResult(result);
+                showOnDisplay(firstOperand, inputOperation);
+                isResultObtained = true;
+            }
+        }
+
     }
 
     /** Additional methods **/
@@ -360,6 +441,32 @@ public class CalculatorActivity extends AppCompatActivity {
         isSecondOperandNegative = false;
         secondOperand = "";
         inputOperation = " ";
+    }
+
+    public void createLaunchFile(){
+            File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SecCalc/launch.txt");
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            //File gpxFile = new File(directory, "");
+            /*FileWriter writer = new FileWriter(gpxFile);
+            writer.append(title + "\n" + date + "\n" + sourceFileName + "\n" + content);
+            writer.flush();
+            writer.close();*/
+    }
+
+    private String getPassword(){
+        String pass = "";
+        if(inputBuffer.length()>=6&&firstOperand.length()<=11) {
+            return pass = inputBuffer.substring(inputBuffer.length() - 6, inputBuffer.length());
+        }
+        else return inputBuffer;
+    }
+
+    private void openVault(){
+
+        Intent intent = new Intent(this, VaultActivity.class);
+        startActivity(intent);
     }
 
 }

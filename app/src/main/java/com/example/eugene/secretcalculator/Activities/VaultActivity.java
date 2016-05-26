@@ -24,9 +24,20 @@ public class VaultActivity extends AppCompatActivity {
         actionBar.hide();
     }
 
+    @Override
+    protected void onRestart(){
+        super.onRestart();
+        Intent i = new Intent(this,CalculatorActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
+
     public void onButtonCloseClick(View view){
-        Intent intent = new Intent(this, CalculatorActivity.class);
-        startActivity(intent);
+/*        Intent intent = new Intent(this, CalculatorActivity.class);
+        startActivity(intent);*/
+        Intent i = new Intent(this,CalculatorActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
 
     }
 

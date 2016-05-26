@@ -57,7 +57,6 @@ public class ImageListAdapter extends BaseAdapter {
         title = (TextView) itemView.findViewById(R.id.textView4);
         date = (TextView) itemView.findViewById(R.id.textView5);
 
-
         title.setText(note.getTitle());
         date.setText(note.getDate());
 
@@ -82,7 +81,6 @@ public class ImageListAdapter extends BaseAdapter {
                 return true;
             }
         });
-
 
         return itemView;
     }

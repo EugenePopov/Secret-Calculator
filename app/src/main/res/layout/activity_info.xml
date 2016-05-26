@@ -155,7 +155,7 @@
                     <ImageButton
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:id="@+id/imageButton8"
+                        android:id="@+id/imageButton11"
                         android:background="@drawable/menu_info" />
                 </LinearLayout>
 

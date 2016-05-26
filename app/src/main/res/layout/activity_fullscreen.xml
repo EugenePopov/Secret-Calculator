@@ -27,7 +27,7 @@
             android:background="@color/accent_material_light"
             android:textAlignment="textEnd"
             android:textColor="@android:color/white"
-            android:textIsSelectable="true"
+            android:textIsSelectable="false"
             android:paddingRight="6dp"
             android:paddingLeft="6dp"
             android:gravity="center_vertical|end"
@@ -43,7 +43,7 @@
             android:textAlignment="textEnd"
             android:textColor="@android:color/white"
             android:gravity="center_vertical|end"
-            android:textIsSelectable="true"
+            android:textIsSelectable="false"
             android:paddingRight="6dp"
             android:paddingLeft="6dp"
             android:textSize="60dp" />
