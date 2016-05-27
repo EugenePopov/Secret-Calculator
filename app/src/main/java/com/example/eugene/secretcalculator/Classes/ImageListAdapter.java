@@ -6,6 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,6 +62,11 @@ public class ImageListAdapter extends BaseAdapter {
 
         title.setText(note.getTitle());
         date.setText(note.getDate());
+        final ImageButton myButton = new ImageButton(context);
+        myButton.setBackgroundResource(R.drawable.delete_item);
+
+        final LinearLayout ll = (LinearLayout) itemView.findViewById(R.id.buttonLayout);
+
 
         final int pos = position;
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +85,7 @@ public class ImageListAdapter extends BaseAdapter {
 
             @Override
             public boolean onLongClick(View arg0) {
-                Toast.makeText(context, "long clicked pos: " , Toast.LENGTH_LONG).show();
+                ll.addView(myButton);
                 return true;
             }
         });

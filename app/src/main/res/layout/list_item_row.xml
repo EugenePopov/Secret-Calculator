@@ -52,7 +52,8 @@
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.2"
-        android:background="@drawable/delete_item"></LinearLayout>
+        android:id="@+id/buttonLayout"
+        android:orientation="horizontal"></LinearLayout>
 
 
 </LinearLayout>

@@ -14,12 +14,19 @@ package com.example.eugene.secretcalculator.Classes.Calculator;
         operation = "";
     }
 
-
      public abstract void compute();
-     public abstract void setFirstOperand(float firstOperand);
-     public abstract void setSecondOperand(float secondOperand);
-     public abstract void setOperation(String operation);
-     public abstract float getResult();
+     public void setFirstOperand(float firstOperand){
+         this.firstOperand = firstOperand;
+     }
+     public void setSecondOperand(float secondOperand){
+         this.secondOperand = secondOperand;
+     }
+     public void setOperation(String operation){
+         this.operation = operation;
+     }
+     public float getResult(){
+         return result;
+     }
 
 
 }

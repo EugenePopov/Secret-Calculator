@@ -13,17 +13,5 @@ public class Sum extends CalculatorBrain {
         result = firstOperand + secondOperand;
     }
 
-    public void setFirstOperand(float firstOperand){
-        this.firstOperand = firstOperand;
-    }
-    public void setSecondOperand(float secondOperand){
-        this.secondOperand = secondOperand;
-    }
-    public void setOperation(String operation){
-        this.operation = operation;
-    }
 
-    public float getResult(){
-        return result;
-    }
 }

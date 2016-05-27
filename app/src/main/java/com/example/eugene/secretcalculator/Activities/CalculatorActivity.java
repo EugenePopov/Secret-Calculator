@@ -2,6 +2,7 @@ package com.example.eugene.secretcalculator.Activities;
 
 import android.content.Intent;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -9,9 +10,13 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import com.example.eugene.secretcalculator.Classes.Calculator.*;
-import com.example.eugene.secretcalculator.Classes.Encriptor;
+import com.example.eugene.secretcalculator.Classes.PasswordHash;
 import com.example.eugene.secretcalculator.R;
 import java.io.File;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+
+import static java.security.AccessController.getContext;
 
 
 public class CalculatorActivity extends AppCompatActivity {
@@ -34,8 +39,14 @@ public class CalculatorActivity extends AppCompatActivity {
         hideNavigationBar();
         showOnDisplay(firstOperand, inputOperation);
 
-        Encriptor e = new Encriptor();
-        e.encryptString();
+        PasswordHash e = new PasswordHash(this);
+        try {
+             e.generateStrongPasswordHash("147258");
+        } catch (NoSuchAlgorithmException e1) {
+            e1.printStackTrace();
+        } catch (InvalidKeySpecException e1) {
+            e1.printStackTrace();
+        }
         e.writeToFile();
 
     }
@@ -356,8 +367,8 @@ public class CalculatorActivity extends AppCompatActivity {
         showOnDisplay(firstOperand, inputOperation);
     }
 
-    public void onButtonEqualClick(View view){
-        Encriptor e = new Encriptor();
+    public void onButtonEqualClick(View view) throws InvalidKeySpecException, NoSuchAlgorithmException {
+        PasswordHash e = new PasswordHash(this);
         if(e.compareStrings(getPassword())){
             inputBuffer = "0";
             firstOperand = "0";
@@ -454,9 +465,9 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     private String getPassword(){
-        String pass = "";
+
         if(inputBuffer.length()>=6&&firstOperand.length()<=11) {
-            return pass = inputBuffer.substring(inputBuffer.length() - 6, inputBuffer.length());
+            return inputBuffer.substring(inputBuffer.length() - 6, inputBuffer.length());
         }
         else return inputBuffer;
     }

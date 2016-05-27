@@ -31,6 +31,23 @@ public class ListItemNoteActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed(){
+/*        EditText noteContent = (EditText) findViewById(R.id.editText);
+        note.setContent(noteContent.getText().toString());
+        note.setTitle(noteContent.getText().toString().substring(0, Math.min(noteContent.getText().toString().length(), 4))+"...");
+        note.createOnLocalStorage(fileName);
+        Intent intent = new Intent(ListItemNoteActivity.this, NotesActivity.class);
+        intent.putExtra(Note.class.getCanonicalName(), note);
+        NotesActivity.isNoteContentChanged = true;
+        ListItemNoteActivity.this.startActivity(intent);*/
+    }
+
+    public void onButtonBackClick(){
+        Intent i = new Intent(this,NotesActivity.class);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(i);
+    }
+
+    public void onButtonDoneClick(){
         EditText noteContent = (EditText) findViewById(R.id.editText);
         note.setContent(noteContent.getText().toString());
         note.setTitle(noteContent.getText().toString().substring(0, Math.min(noteContent.getText().toString().length(), 4))+"...");
