@@ -6,12 +6,10 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import com.example.eugene.secretcalculator.Activities.ListItemNoteActivity;
 import com.example.eugene.secretcalculator.Activities.NotesActivity;
 import com.example.eugene.secretcalculator.R;
@@ -24,11 +22,14 @@ public class ImageListAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflater;
     ArrayList<Note> notes;
+    ArrayList<String> fileList;
     Note note;
+    int positionToDelete;
 
-    public ImageListAdapter(Context context, ArrayList<Note> notes) {
+    public ImageListAdapter(Context context, ArrayList<Note> notes, ArrayList<String> fileList) {
         this.context = context;
         this.notes = notes;
+        this.fileList = fileList;
     }
 
     @Override
@@ -51,7 +52,6 @@ public class ImageListAdapter extends BaseAdapter {
         TextView title;
         TextView date;
 
-
         inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -65,6 +65,7 @@ public class ImageListAdapter extends BaseAdapter {
         date.setText(note.getDate());
         final ImageButton myButton = new ImageButton(context);
         myButton.setBackgroundResource(R.drawable.delete_idle);
+        myButton.setOnClickListener(oclBtnOk);
 
         final LinearLayout buttonLayout = (LinearLayout) itemView.findViewById(R.id.buttonLayout);
         final LinearLayout rowLayout = (LinearLayout) itemView.findViewById(R.id.rowLayout);
@@ -94,6 +95,7 @@ public class ImageListAdapter extends BaseAdapter {
             @Override
             public boolean onLongClick(View arg0) {
                 buttonLayout.addView(myButton);
+                positionToDelete = pos;
                 rowLayout.setBackgroundResource(R.drawable.line_delete);
                 return true;
             }
@@ -102,7 +104,17 @@ public class ImageListAdapter extends BaseAdapter {
             return itemView;
     }
 
-
+    View.OnClickListener oclBtnOk = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            note = notes.get(positionToDelete);
+            notes.remove(note);
+            fileList.remove(note.getSourceFileName());
+            note.deleteFromLocalStorage();
+            notifyDataSetChanged();
+            NotesActivity.updateNoteListFile(fileList);
+        }
+    };
 
 
 }

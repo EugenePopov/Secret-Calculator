@@ -8,14 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.Toast;
-
 import com.example.eugene.secretcalculator.Classes.ImageListAdapter;
 import com.example.eugene.secretcalculator.Classes.Note;
+import com.example.eugene.secretcalculator.Classes.SharedData;
 import com.example.eugene.secretcalculator.R;
-
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -26,6 +23,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class NotesActivity extends AppCompatActivity{
 
@@ -33,8 +31,7 @@ public class NotesActivity extends AppCompatActivity{
     ArrayList<String> fileList = new ArrayList<>();
     ListView listView;
     ImageListAdapter adapter;
-    Integer numberOfNotes = 0 ;
-    public static boolean isNoteContentChanged;
+    Integer numberOfNotes = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,32 +49,40 @@ public class NotesActivity extends AppCompatActivity{
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
         if (requestCode == 1) {
             if(resultCode == Activity.RESULT_OK){
-                /*Note note = (Note) getIntent().getParcelableExtra(
-                        Note.class.getCanonicalName());*/
                 Note note = data.getParcelableExtra(Note.class.getCanonicalName());
                 notes.add(note);
-                listView.setAdapter(null);
-                initializeListView();
 
-                isNoteContentChanged = false;
-            }
-            if (resultCode == Activity.RESULT_CANCELED) {
-                //Write your code if there's no result
+                //Reinflate listview
+                listView.setAdapter(null);
+                Collections.reverse(notes);
+                adapter = new ImageListAdapter(NotesActivity.this, notes, fileList);
+                listView.setAdapter(adapter);
+
             }
         }
-    }//onActivityResult
+    }
+
 
     @Override
-    protected void onRestart() {
-        super.onRestart();
-
+    public void onStart() {
+        super.onStart();
+        if (SharedData.runningActivities == 0) {
             Intent i = new Intent(this,CalculatorActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
+        }
+        SharedData.runningActivities++;
+    }
 
+    @Override
+    public void onStop() {
+        super.onStop();
+        SharedData.runningActivities--;
+        if (SharedData.runningActivities == 0) {
+            // app goes to background
+        }
     }
 
     private void hideNavigationBar() {
@@ -98,7 +103,7 @@ public class NotesActivity extends AppCompatActivity{
         notes.add(test);
         fileList.add(test.getSourceFileName());
         listView = (ListView) findViewById(R.id.listView);
-        adapter = new ImageListAdapter(NotesActivity.this, notes);
+        adapter = new ImageListAdapter(NotesActivity.this, notes, fileList);
         listView.setAdapter(adapter);
         test.createOnLocalStorage("NOTE_"+ numberOfNotes.toString());
         updateConfigFile(numberOfNotes.toString());
@@ -129,7 +134,7 @@ public class NotesActivity extends AppCompatActivity{
         }
     }
 
-    public void updateNoteListFile(ArrayList<String> filelist){
+    public static void updateNoteListFile(ArrayList<String> filelist){
         try{
             File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SecCalc/Notes/");
 
@@ -167,7 +172,6 @@ public class NotesActivity extends AppCompatActivity{
     public void createNoteListFile(){
         try{
             File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SecCalc/Notes/");
-
                 File gpxFile = new File(directory, "notelist");
                 gpxFile.createNewFile();
 
@@ -287,12 +291,10 @@ public class NotesActivity extends AppCompatActivity{
     }
 
     private void initializeListView(){
+
         loadDataFromStorage();
-        //listView = (ListView) findViewById(R.id.listView);
-        adapter = new ImageListAdapter(NotesActivity.this, notes);
+        adapter = new ImageListAdapter(NotesActivity.this, notes, fileList);
         listView.setAdapter(adapter);
     }
-
-
 
 }

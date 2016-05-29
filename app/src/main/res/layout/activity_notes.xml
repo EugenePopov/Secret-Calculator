@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:background="@android:color/white"
     android:orientation="vertical"
-    android:weightSum="6"
+    android:weightSum="1"
     tools:context=".Activities.NotesActivity">
 
 
@@ -12,9 +12,9 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="0.1"
         android:weightSum="6"
-        android:background="#f3f1f1">
+        android:background="#d5d6d6">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -23,62 +23,16 @@
             android:weightSum="3"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:weightSum="3"
-                android:layout_weight="0.75"
-                android:orientation="horizontal">
-
-
-                <LinearLayout
-
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.75">
-
-
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.25">
-
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/imageButton8"
-                        android:background="@drawable/button_back_menu"
-                        android:onClick="onButtonBackMenuClick" />
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.25">
-
-            </LinearLayout>
-
+            <ImageButton
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton16"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:scaleY="0.5"
+                android:scaleX="0.5"
+                android:src="@drawable/button_back_menu"
+                android:onClick="onButtonBackMenuClick" />
         </LinearLayout>
 
         <LinearLayout
@@ -102,7 +56,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="notes"
                 android:id="@+id/textView3"
-                android:textColor="@color/accent_material_light" />
+                android:textColor="#FF43C4B0" />
         </LinearLayout>
 
         <LinearLayout
@@ -120,7 +74,7 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="4"
+        android:layout_weight="0.8"
         android:layout_gravity="center_horizontal">
 
         <ListView
@@ -138,9 +92,9 @@
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="0dp"
-        android:layout_weight="1"
         android:weightSum="6"
-        android:background="#f3f1f1">
+        android:background="#d5d6d6"
+        android:layout_weight="0.1">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -149,62 +103,16 @@
             android:weightSum="3"
             android:orientation="vertical">
 
-            <LinearLayout
+            <ImageButton
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:weightSum="3"
-                android:layout_weight="0.75"
-                android:orientation="horizontal">
-
-
-                <LinearLayout
-
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.75">
-
-
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.25">
-
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/imageButton12"
-                        android:background="@drawable/button_add"
-                        android:onClick="onButtonAddClick" />
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.25">
-
-            </LinearLayout>
-
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton17"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                android:scaleY="0.5"
+                android:scaleX="0.5"
+                android:src="@drawable/button_add"
+                android:onClick="onButtonAddClick" />
         </LinearLayout>
 
         <LinearLayout

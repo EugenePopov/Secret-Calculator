@@ -4,6 +4,7 @@ package com.example.eugene.secretcalculator.Classes;
 import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.speech.tts.TextToSpeech;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -58,6 +59,11 @@ public class Note extends VaultEntity implements Parcelable{
         } catch (IOException e){
             e.printStackTrace();
         }
+    }
+
+    public void deleteFromLocalStorage(){
+        File note = new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/SecCalc/Notes/" + sourceFileName + ".txt");
+        note.delete();
     }
 
     public int describeContents() {

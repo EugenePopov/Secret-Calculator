@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.example.eugene.secretcalculator.Classes.FileLocker;
+import com.example.eugene.secretcalculator.Classes.SharedData;
 import com.example.eugene.secretcalculator.R;
 
 public class VaultActivity extends AppCompatActivity {
@@ -24,12 +25,32 @@ public class VaultActivity extends AppCompatActivity {
         actionBar.hide();
     }
 
-    @Override
+ /*   @Override
     protected void onRestart(){
         super.onRestart();
         Intent i = new Intent(this,CalculatorActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
+    }*/
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (SharedData.runningActivities == 0) {
+            Intent i = new Intent(this,CalculatorActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        }
+        SharedData.runningActivities++;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        SharedData.runningActivities--;
+        if (SharedData.runningActivities == 0) {
+            // app goes to background
+        }
     }
 
     public void onButtonCloseClick(View view){

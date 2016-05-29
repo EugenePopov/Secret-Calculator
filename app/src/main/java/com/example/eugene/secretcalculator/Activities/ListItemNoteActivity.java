@@ -8,8 +8,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-
 import com.example.eugene.secretcalculator.Classes.Note;
+import com.example.eugene.secretcalculator.Classes.SharedData;
 import com.example.eugene.secretcalculator.R;
 
 public class ListItemNoteActivity extends AppCompatActivity {
@@ -31,15 +31,23 @@ public class ListItemNoteActivity extends AppCompatActivity {
         }
 
     @Override
-    public void onBackPressed(){
-/*        EditText noteContent = (EditText) findViewById(R.id.editText);
-        note.setContent(noteContent.getText().toString());
-        note.setTitle(noteContent.getText().toString().substring(0, Math.min(noteContent.getText().toString().length(), 4))+"...");
-        note.createOnLocalStorage(fileName);
-        Intent intent = new Intent(ListItemNoteActivity.this, NotesActivity.class);
-        intent.putExtra(Note.class.getCanonicalName(), note);
-        NotesActivity.isNoteContentChanged = true;
-        ListItemNoteActivity.this.startActivity(intent);*/
+    public void onStart() {
+        super.onStart();
+        if (SharedData.runningActivities == 0) {
+            Intent i = new Intent(this,CalculatorActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        }
+        SharedData.runningActivities++;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        SharedData.runningActivities--;
+        if (SharedData.runningActivities == 0) {
+            // app goes to background
+        }
     }
 
     public void onButtonBackClick(View view){
@@ -53,10 +61,6 @@ public class ListItemNoteActivity extends AppCompatActivity {
         note.setContent(noteContent.getText().toString());
         note.setTitle(noteContent.getText().toString().substring(0, Math.min(noteContent.getText().toString().length(), 4))+"...");
         note.createOnLocalStorage(fileName);
-        /*Intent intent = new Intent(ListItemNoteActivity.this, NotesActivity.class);
-        intent.putExtra(Note.class.getCanonicalName(), note);
-        NotesActivity.isNoteContentChanged = true;
-        ListItemNoteActivity.this.startActivity(intent);*/
 
         Intent returnIntent = new Intent(ListItemNoteActivity.this, NotesActivity.class);
         returnIntent.putExtra(Note.class.getCanonicalName(), note);

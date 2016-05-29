@@ -11,6 +11,7 @@ import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import com.example.eugene.secretcalculator.Classes.Calculator.*;
 import com.example.eugene.secretcalculator.Classes.PasswordHash;
+import com.example.eugene.secretcalculator.Classes.SharedData;
 import com.example.eugene.secretcalculator.R;
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
@@ -59,6 +60,24 @@ public class CalculatorActivity extends AppCompatActivity {
         isFirstOperandNegative = false;
         isSecondOperandNegative = false;
         isResultObtained = false;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (SharedData.runningActivities == 0) {
+            // app enters foreground
+        }
+        SharedData.runningActivities++;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        SharedData.runningActivities--;
+        if (SharedData.runningActivities == 0) {
+            // app goes to background
+        }
     }
 
     private void hideNavigationBar() {

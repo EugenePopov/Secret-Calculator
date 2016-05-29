@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+
+import com.example.eugene.secretcalculator.Classes.SharedData;
 import com.example.eugene.secretcalculator.R;
 
 
@@ -19,11 +21,31 @@ public class MediaActivity extends AppCompatActivity {
 
     }
 
-    protected void onRestart(){
+/*    protected void onRestart(){
         super.onRestart();
         Intent i = new Intent(this,CalculatorActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
+    }*/
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (SharedData.runningActivities == 0) {
+            Intent i = new Intent(this,CalculatorActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(i);
+        }
+        SharedData.runningActivities++;
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        SharedData.runningActivities--;
+        if (SharedData.runningActivities == 0) {
+            // app goes to background
+        }
     }
 
     private void hideNavigationBar() {
