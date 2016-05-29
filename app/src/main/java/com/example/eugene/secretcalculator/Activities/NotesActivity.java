@@ -1,5 +1,6 @@
 package com.example.eugene.secretcalculator.Activities;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Environment;
 import android.support.v7.app.ActionBar;
@@ -26,9 +27,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-public class NotesActivity extends AppCompatActivity implements AdapterView.OnItemLongClickListener{
+public class NotesActivity extends AppCompatActivity{
 
     ArrayList<Note> notes = new ArrayList<>();
+    ArrayList<String> fileList = new ArrayList<>();
     ListView listView;
     ImageListAdapter adapter;
     Integer numberOfNotes = 0 ;
@@ -41,25 +43,37 @@ public class NotesActivity extends AppCompatActivity implements AdapterView.OnIt
         listView = (ListView) findViewById(R.id.listView);
         listView.setLongClickable(true);
         createConfigFile();
+        createNoteListFile();
+        fillFileListArray();
         numberOfNotes = getNumberOfNoteFiles();
         initializeListView();
         hideNavigationBar();
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode == 1) {
+            if(resultCode == Activity.RESULT_OK){
+                /*Note note = (Note) getIntent().getParcelableExtra(
+                        Note.class.getCanonicalName());*/
+                Note note = data.getParcelableExtra(Note.class.getCanonicalName());
+                notes.add(note);
+                listView.setAdapter(null);
+                initializeListView();
+
+                isNoteContentChanged = false;
+            }
+            if (resultCode == Activity.RESULT_CANCELED) {
+                //Write your code if there's no result
+            }
+        }
+    }//onActivityResult
+
+    @Override
     protected void onRestart() {
         super.onRestart();
 
-        if (!isNoteContentChanged){
-            Note note = (Note) getIntent().getParcelableExtra(
-                    Note.class.getCanonicalName());
-            notes.add(note);
-            listView.setAdapter(null);
-            initializeListView();
-            isNoteContentChanged = false;
-        }
-
-            super.onRestart();
             Intent i = new Intent(this,CalculatorActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(i);
@@ -82,11 +96,13 @@ public class NotesActivity extends AppCompatActivity implements AdapterView.OnIt
         test.setSourceFileName("NOTE_"+ numberOfNotes.toString());
         test.setDate(Calendar.getInstance().getTime().toString());
         notes.add(test);
+        fileList.add(test.getSourceFileName());
         listView = (ListView) findViewById(R.id.listView);
         adapter = new ImageListAdapter(NotesActivity.this, notes);
         listView.setAdapter(adapter);
         test.createOnLocalStorage("NOTE_"+ numberOfNotes.toString());
         updateConfigFile(numberOfNotes.toString());
+        updateNoteListFile(fileList);
     }
 
     @Override
@@ -113,6 +129,24 @@ public class NotesActivity extends AppCompatActivity implements AdapterView.OnIt
         }
     }
 
+    public void updateNoteListFile(ArrayList<String> filelist){
+        try{
+            File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SecCalc/Notes/");
+
+            File gpxFile = new File(directory, "notelist");
+
+            FileWriter writer = new FileWriter(gpxFile);
+            for (String note : filelist) {
+                writer.append(note + "\n");
+                writer.flush();
+            }
+            writer.close();
+
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     public void createConfigFile(){
         try{
             File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SecCalc/Notes/");
@@ -125,6 +159,18 @@ public class NotesActivity extends AppCompatActivity implements AdapterView.OnIt
             writer.flush();
             writer.close();
             }
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void createNoteListFile(){
+        try{
+            File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SecCalc/Notes/");
+
+                File gpxFile = new File(directory, "notelist");
+                gpxFile.createNewFile();
+
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -205,15 +251,37 @@ public class NotesActivity extends AppCompatActivity implements AdapterView.OnIt
         return numberOfNotes;
     }
 
-    public void loadDataFromStorage(){
-        int numberOfFiles = getNumberOfNoteFiles();
+    private void fillFileListArray(){
 
-        for (int i = 0; i< numberOfFiles ; i++)
-        {
+        try {
+            InputStream inputStream = new FileInputStream(new File(Environment.getExternalStorageDirectory().getAbsolutePath()+ "/SecCalc/Notes/notelist"));
+            if (inputStream != null) {
+                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
+                BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
+                String receiveContentString = "";
+
+                StringBuilder stringContentBuilder = new StringBuilder();
+
+                while ((receiveContentString = bufferedReader.readLine()) != null) {
+                    stringContentBuilder.append(receiveContentString);
+                    fileList.add(stringContentBuilder.toString());
+                    stringContentBuilder.delete(0, stringContentBuilder.toString().length());
+                }
+                inputStream.close();
+            }
+        } catch (FileNotFoundException e) {
+            Log.e("login activity", "File not found: " + e.toString());
+        } catch (IOException e) {
+            Log.e("login activity", "Can not read file: " + e.toString());
+        }
+    }
+
+    public void loadDataFromStorage(){
+
+        for(String note : fileList){
             Note n;
-            int index = i+1;
-            String name = String.format("NOTE_%s.txt",index);
-            n=readFromFile(name);
+            n=readFromFile(note+".txt");
             notes.add(n);
         }
     }
@@ -225,16 +293,6 @@ public class NotesActivity extends AppCompatActivity implements AdapterView.OnIt
         listView.setAdapter(adapter);
     }
 
-    //ListView listView = (ListView) findViewById(R.id.listView);
-
-    @Override
-    public boolean onItemLongClick(AdapterView<?> l, View v,
-                                   final int position, long id) {
-
-        Toast.makeText(this, "long clicked pos: " + position, Toast.LENGTH_LONG).show();
-
-        return true;
-    }
 
 
 }

@@ -1,18 +1,19 @@
 package com.example.eugene.secretcalculator.Classes;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.eugene.secretcalculator.Activities.ListItemNoteActivity;
+import com.example.eugene.secretcalculator.Activities.NotesActivity;
 import com.example.eugene.secretcalculator.R;
 
 import java.util.ArrayList;
@@ -63,10 +64,17 @@ public class ImageListAdapter extends BaseAdapter {
         title.setText(note.getTitle());
         date.setText(note.getDate());
         final ImageButton myButton = new ImageButton(context);
-        myButton.setBackgroundResource(R.drawable.delete_item);
+        myButton.setBackgroundResource(R.drawable.delete_idle);
 
-        final LinearLayout ll = (LinearLayout) itemView.findViewById(R.id.buttonLayout);
+        final LinearLayout buttonLayout = (LinearLayout) itemView.findViewById(R.id.buttonLayout);
+        final LinearLayout rowLayout = (LinearLayout) itemView.findViewById(R.id.rowLayout);
 
+
+
+        ViewGroup.LayoutParams params = itemView.getLayoutParams();
+        if (params != null) {
+            params.height = 100;
+        }
 
         final int pos = position;
         itemView.setOnClickListener(new View.OnClickListener() {
@@ -77,7 +85,7 @@ public class ImageListAdapter extends BaseAdapter {
                notes.remove(note);
                Intent intent = new Intent(context, ListItemNoteActivity.class);
                intent.putExtra(Note.class.getCanonicalName(), note);
-               context.startActivity(intent);
+               ((Activity)context).startActivityForResult(intent, 1);
             }
         });
 
@@ -85,13 +93,16 @@ public class ImageListAdapter extends BaseAdapter {
 
             @Override
             public boolean onLongClick(View arg0) {
-                ll.addView(myButton);
+                buttonLayout.addView(myButton);
+                rowLayout.setBackgroundResource(R.drawable.line_delete);
                 return true;
             }
         });
 
-        return itemView;
+            return itemView;
     }
+
+
 
 
 }

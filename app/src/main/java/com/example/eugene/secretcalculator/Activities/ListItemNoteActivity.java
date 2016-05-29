@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -41,21 +42,26 @@ public class ListItemNoteActivity extends AppCompatActivity {
         ListItemNoteActivity.this.startActivity(intent);*/
     }
 
-    public void onButtonBackClick(){
+    public void onButtonBackClick(View view){
         Intent i = new Intent(this,NotesActivity.class);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(i);
     }
 
-    public void onButtonDoneClick(){
+    public void onButtonDoneClick(View view){
         EditText noteContent = (EditText) findViewById(R.id.editText);
         note.setContent(noteContent.getText().toString());
         note.setTitle(noteContent.getText().toString().substring(0, Math.min(noteContent.getText().toString().length(), 4))+"...");
         note.createOnLocalStorage(fileName);
-        Intent intent = new Intent(ListItemNoteActivity.this, NotesActivity.class);
+        /*Intent intent = new Intent(ListItemNoteActivity.this, NotesActivity.class);
         intent.putExtra(Note.class.getCanonicalName(), note);
         NotesActivity.isNoteContentChanged = true;
-        ListItemNoteActivity.this.startActivity(intent);
+        ListItemNoteActivity.this.startActivity(intent);*/
+
+        Intent returnIntent = new Intent(ListItemNoteActivity.this, NotesActivity.class);
+        returnIntent.putExtra(Note.class.getCanonicalName(), note);
+        setResult(NotesActivity.RESULT_OK,returnIntent);
+        finish();
     }
 
     private void hideNavigationBar() {
