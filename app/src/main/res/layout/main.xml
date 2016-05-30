@@ -64,7 +64,6 @@
 
         <Button
             android:id="@+id/btnGalleryPick"
-            style="@style/btn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_sel"
@@ -72,7 +71,6 @@
 
         <Button
             android:id="@+id/btnGalleryPickMul"
-            style="@style/btn"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"

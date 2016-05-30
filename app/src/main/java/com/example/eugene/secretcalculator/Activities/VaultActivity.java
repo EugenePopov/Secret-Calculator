@@ -69,7 +69,7 @@ public class VaultActivity extends AppCompatActivity {
     }
 
     public void onButtonMediaClick(View view){
-        Intent intent = new Intent(this, MediaActivity.class);
+        Intent intent = new Intent(this, AlbumActivity.class);
         startActivity(intent);
     }
 

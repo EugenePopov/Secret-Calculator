@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.eugene.secretcalculator.Classes.SharedData;
+import com.example.eugene.secretcalculator.MultipleImagePicker.MainActivity;
 import com.example.eugene.secretcalculator.R;
 
 import java.util.ArrayList;
@@ -63,17 +64,21 @@ public class AlbumActivity extends AppCompatActivity {
     }*/
 
     public void onButtonAddClick(View View){
-       /* // Create intent to Open Image applications like Gallery, Google Photos
+/*
+        // Create intent to Open Image applications like Gallery, Google Photos
         Intent galleryIntent = new Intent(Intent.ACTION_PICK,
                 android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 // Start the Intent
-        startActivityForResult(galleryIntent, 1);*/
+        startActivityForResult(galleryIntent, 1);
         Intent intent = new Intent();
-        intent.setType("image/*");
+        intent.setType("image*/
+/*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent,"Select Picture"), 1);
-
+*/
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
     }
 
    /* protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -112,7 +117,7 @@ public class AlbumActivity extends AppCompatActivity {
 
     }*/
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         String imageEncoded;
         try {
@@ -170,6 +175,6 @@ public class AlbumActivity extends AppCompatActivity {
         }
 
         super.onActivityResult(requestCode, resultCode, data);
-    }
+    }*/
 
 }
