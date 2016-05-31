@@ -13,6 +13,7 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
@@ -48,7 +49,7 @@ public class CustomGalleryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.gallery);
-
+        hideNavigationBar();
         action = getIntent().getAction();
         if (action == null) {
             finish();
@@ -211,6 +212,11 @@ public class CustomGalleryActivity extends AppCompatActivity {
         // show newest photo at beginning of the list
         Collections.reverse(galleryList);
         return galleryList;
+    }
+
+    private void hideNavigationBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.hide();
     }
 
 }
