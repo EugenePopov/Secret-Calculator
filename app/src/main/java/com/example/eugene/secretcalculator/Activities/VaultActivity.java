@@ -6,8 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 
-import com.example.eugene.secretcalculator.Classes.FileLocker;
 import com.example.eugene.secretcalculator.Classes.SharedData;
+import com.example.eugene.secretcalculator.MultipleImagePicker.AlbumActivity;
 import com.example.eugene.secretcalculator.R;
 
 public class VaultActivity extends AppCompatActivity {

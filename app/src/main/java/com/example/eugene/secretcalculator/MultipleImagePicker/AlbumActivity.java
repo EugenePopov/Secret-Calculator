@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ViewSwitcher;
 
@@ -24,7 +25,7 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 
-public class MainActivity extends AppCompatActivity {
+public class AlbumActivity extends AppCompatActivity {
 
     GridView gridGallery;
     Handler handler;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     ImageView imgSinglePick;
     Button btnGalleryPick;
-    Button btnGalleryPickMul;
+    ImageButton btnGalleryPickMul;
 
     String action;
     ViewSwitcher viewSwitcher;
@@ -42,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.main);
+        setContentView(R.layout.activity_album);
         hideNavigationBar();
         initImageLoader();
         init();
@@ -75,19 +76,9 @@ public class MainActivity extends AppCompatActivity {
 
         imgSinglePick = (ImageView) findViewById(R.id.imgSinglePick);
 
-        btnGalleryPick = (Button) findViewById(R.id.btnGalleryPick);
-        btnGalleryPick.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
 
-                Intent i = new Intent(Action.ACTION_PICK);
-                startActivityForResult(i, 100);
-
-            }
-        });
-
-        btnGalleryPickMul = (Button) findViewById(R.id.btnGalleryPickMul);
+        btnGalleryPickMul = (ImageButton) findViewById(R.id.imageButton20);
         btnGalleryPickMul.setOnClickListener(new View.OnClickListener() {
 
             @Override
