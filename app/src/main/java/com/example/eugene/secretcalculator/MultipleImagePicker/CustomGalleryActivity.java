@@ -4,7 +4,6 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -22,13 +21,13 @@ import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.example.eugene.secretcalculator.Classes.DbBinder;
 import com.example.eugene.secretcalculator.R;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiscCache;
 import com.nostra13.universalimageloader.cache.memory.impl.WeakMemoryCache;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
-import com.nostra13.universalimageloader.core.assist.ImageScaleType;
 import com.nostra13.universalimageloader.core.assist.PauseOnScrollListener;
 import com.nostra13.universalimageloader.utils.StorageUtils;
 
@@ -40,9 +39,11 @@ public class CustomGalleryActivity extends AppCompatActivity {
 
     ImageView imgNoMedia;
     Button btnGalleryOk;
-
+    DbBinder dbBinder = new DbBinder(this);
+    public static Intent data;
     String action;
     private ImageLoader imageLoader;
+    //public static  String[] importedImages;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -68,13 +69,15 @@ public class CustomGalleryActivity extends AppCompatActivity {
                     CACHE_DIR);
 
             DisplayImageOptions defaultOptions = new DisplayImageOptions.Builder()
-                    .cacheOnDisc(true).imageScaleType(ImageScaleType.EXACTLY)
+                    .cacheOnDisc(true)
                     .bitmapConfig(Bitmap.Config.RGB_565).build();
             ImageLoaderConfiguration.Builder builder = new ImageLoaderConfiguration.Builder(
                     getBaseContext())
                     .defaultDisplayImageOptions(defaultOptions)
                     .discCache(new UnlimitedDiscCache(cacheDir))
                     .memoryCache(new WeakMemoryCache());
+
+
 
             ImageLoaderConfiguration config = builder.build();
             imageLoader = ImageLoader.getInstance();
@@ -100,12 +103,6 @@ public class CustomGalleryActivity extends AppCompatActivity {
             findViewById(R.id.llBottomContainer).setVisibility(View.VISIBLE);
             gridGallery.setOnItemClickListener(mItemMulClickListener);
             adapter.setMultiplePick(true);
-
-        } else if (action.equalsIgnoreCase(Action.ACTION_PICK)) {
-
-            findViewById(R.id.llBottomContainer).setVisibility(View.GONE);
-            gridGallery.setOnItemClickListener(mItemSingleClickListener);
-            adapter.setMultiplePick(false);
 
         }
 
@@ -149,17 +146,21 @@ public class CustomGalleryActivity extends AppCompatActivity {
         public void onClick(View v) {
             ArrayList<CustomGallery> selected = adapter.getSelected();
 
-            String[] allPath = new String[selected.size()];
-            for (int i = 0; i < allPath.length; i++) {
-                allPath[i] = selected.get(i).sdcardPath;
+            String[] selectedImages = new String[selected.size()];
+            for (int i = 0; i < selectedImages.length; i++) {
+                selectedImages[i] = selected.get(i).sdcardPath;
             }
 
-            Intent data = new Intent().putExtra("all_path", allPath);
-            setResult(RESULT_OK, data);
-            finish();
+            /** Save images in database**/
+            for (String path : selectedImages){
+                dbBinder.saveImageToDatabase(path);
+            }
+
+           dbBinder.getImagesFromDatabase();
 
         }
     };
+
     AdapterView.OnItemClickListener mItemMulClickListener = new AdapterView.OnItemClickListener() {
 
         @Override
@@ -169,16 +170,7 @@ public class CustomGalleryActivity extends AppCompatActivity {
         }
     };
 
-    AdapterView.OnItemClickListener mItemSingleClickListener = new AdapterView.OnItemClickListener() {
 
-        @Override
-        public void onItemClick(AdapterView<?> l, View v, int position, long id) {
-            CustomGallery item = adapter.getItem(position);
-            Intent data = new Intent().putExtra("single_path", item.sdcardPath);
-            setResult(RESULT_OK, data);
-            finish();
-        }
-    };
 
     private ArrayList<CustomGallery> getGalleryPhotos() {
         ArrayList<CustomGallery> galleryList = new ArrayList<CustomGallery>();

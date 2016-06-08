@@ -5,9 +5,9 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.eugene.secretcalculator.Classes.SharedData;
-import com.example.eugene.secretcalculator.MultipleImagePicker.AlbumActivity;
 import com.example.eugene.secretcalculator.R;
 
 public class VaultActivity extends AppCompatActivity {
@@ -76,6 +76,36 @@ public class VaultActivity extends AppCompatActivity {
     public void onButtonNotesClick(View view){
         Intent intent = new Intent(this, NotesActivity.class);
         startActivity(intent);
+
+    }
+
+    public void onButtonSettingsClick(View view){
+        Intent intent = new Intent(this, FirstLaunchActivity.class);
+        startActivity(intent);
+
+    }
+
+    public void onButtonContactsClick(View view){
+        Toast.makeText(this, "Coming soon...",
+                Toast.LENGTH_LONG).show();
+
+    }
+
+    public void onButtonBrowserClick(View view){
+        Toast.makeText(this, "Coming soon...",
+                Toast.LENGTH_LONG).show();
+
+    }
+
+    public void onButtonBookmarksClick(View view){
+        Toast.makeText(this, "Coming soon...",
+                Toast.LENGTH_LONG).show();
+
+    }
+
+    public void onButtonMusicClick(View view){
+        Toast.makeText(this, "Coming soon...",
+                Toast.LENGTH_LONG).show();
 
     }
 

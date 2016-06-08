@@ -64,14 +64,14 @@ public class PasswordHash {
     public void writeToFile() {
         try{
             File directory = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SecCalc/Config/");
-            if (!directory.exists()) {
+
                 directory.mkdirs();
                 File gpxFile = new File(directory, "pass.txt");
                 FileWriter writer = new FileWriter(gpxFile);
                 writer.append(encryptedString);
                 writer.flush();
                 writer.close();
-            }
+
         } catch (IOException e){
             e.printStackTrace();
         }

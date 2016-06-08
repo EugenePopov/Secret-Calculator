@@ -1,27 +1,25 @@
 package com.example.eugene.secretcalculator.Classes;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.res.Resources;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Environment;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 
+import com.example.eugene.secretcalculator.MultipleImagePicker.CustomGalleryActivity;
 import com.example.eugene.secretcalculator.MultipleImagePicker.Utility;
 
-import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
+
 
 /**
  * Created by Eugene on 31-May-16.
@@ -30,15 +28,15 @@ public class DbBinder {
 
     SQLiteDatabase db;
     Context context;
-    int thumbnailWidth = Resources.getSystem().getDisplayMetrics().widthPixels/4;
-    int thumbnailHeight = Resources.getSystem().getDisplayMetrics().widthPixels/4;
+    public static ProgressDialog mProgressDialog;
+
 
     public DbBinder(Context context){
         this.context = context;
     }
 
-    public void saveImage(String path){
-        createDataBase();
+    public void saveImageToDatabase(String path){
+        db = context.openOrCreateDatabase("imgs.db", context.MODE_PRIVATE, null);
         try{
             FileInputStream fis = new FileInputStream(path);
             byte [] image = new byte[fis.available()];
@@ -55,36 +53,32 @@ public class DbBinder {
         }
     }
 
-    public ArrayList<String> getImage() {
-        Cursor c = db.rawQuery("select * from tb", null);
+    public void getImagesFromDatabase() {
+       // Cursor c = db.rawQuery("select * from tb", null);
 
-        TumblrDataToStorage tdts = new TumblrDataToStorage();
-        //tdts.execute();
+        CreateTemporaryImageFiles tdts = new CreateTemporaryImageFiles();
         ArrayList<String> result = null;
-        try {
-            result = tdts.execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-        return result;
+
+             tdts.execute();
+
+
     }
 
-    private void createDataBase(){
-        db = context.openOrCreateDatabase("imgs.db", context.MODE_PRIVATE, null);
-        db.execSQL("create table if not exists tb (a blob)");
-    }
 
-    private class TumblrDataToStorage extends AsyncTask<Void, Void, ArrayList<String>> {
+    private class CreateTemporaryImageFiles extends AsyncTask<Void, Void, ArrayList<String> > {
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
+            mProgressDialog = new ProgressDialog(context);
+            mProgressDialog.setTitle("Importing from gallery");
+            mProgressDialog.setMessage("Please, don't close the app...");
+            mProgressDialog.setIndeterminate(false);
+            mProgressDialog.show();
         }
 
         @Override
-        protected ArrayList<String> doInBackground(Void... params) {
+        protected ArrayList<String>  doInBackground(Void... params) {
             File directory = getDirectoryPath();
             ArrayList<String> imageList = new ArrayList<>();
 
@@ -121,13 +115,24 @@ public class DbBinder {
             File path;
 
                 path = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/SecCalc/Media/thumbnails/");
-                path.mkdirs();
+                if(!path.exists()) {
+                    path.mkdirs();
+                }
             return path;
         }
 
         @Override
         protected void onPostExecute(ArrayList<String> result) {
+            //imageList = result;
+            mProgressDialog.dismiss();
+            String[] importedImages = new String[result.size()];
+            for(int i =0; i<importedImages.length;i++){
+                importedImages[i] = result.get(i);
+            }
 
+            CustomGalleryActivity.data = new Intent().putExtra("selectedImages", importedImages);
+            ((Activity)context).setResult(((Activity)context).RESULT_OK, CustomGalleryActivity.data);
+            ((Activity)context).finish();
         }
     }
 

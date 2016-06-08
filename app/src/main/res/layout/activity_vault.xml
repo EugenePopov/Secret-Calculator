@@ -222,7 +222,8 @@
                 android:id="@+id/imageButton3"
                 android:layout_weight="0.225"
                 android:background="@drawable/button_contacts"
-                android:layout_marginLeft="15dp" />
+                android:layout_marginLeft="15dp"
+                android:onClick="onButtonContactsClick" />
 
         </LinearLayout>
 
@@ -238,7 +239,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton4"
                 android:background="@drawable/button_music"
-                android:layout_weight="0.2" />
+                android:layout_weight="0.2"
+                android:onClick="onButtonMusicClick" />
         </LinearLayout>
 
     <LinearLayout
@@ -254,7 +256,8 @@
                 android:id="@+id/imageButton5"
                 android:background="@drawable/button_browser"
                 android:layout_weight="0.23"
-                android:layout_marginRight="15dp" />
+                android:layout_marginRight="15dp"
+                android:onClick="onButtonBrowserClick" />
 
             <ImageButton
                 android:layout_width="30dp"
@@ -262,7 +265,8 @@
                 android:id="@+id/imageButton6"
                 android:background="@drawable/button_bookmark"
                 android:layout_weight="0.23"
-                android:layout_marginLeft="15dp" />
+                android:layout_marginLeft="15dp"
+                android:onClick="onButtonBookmarksClick" />
         </LinearLayout>
 
     <LinearLayout
@@ -277,7 +281,8 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/imageButton7"
                 android:background="@drawable/button_settings"
-                android:layout_weight="0.2" />
+                android:layout_weight="0.2"
+                android:onClick="onButtonSettingsClick" />
         </LinearLayout>
 
 

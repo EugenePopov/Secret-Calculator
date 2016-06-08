@@ -25,6 +25,7 @@ public class ImageListAdapter extends BaseAdapter {
     ArrayList<String> fileList;
     Note note;
     int positionToDelete;
+    boolean isItemSelected = false;
 
     public ImageListAdapter(Context context, ArrayList<Note> notes, ArrayList<String> fileList) {
         this.context = context;
@@ -94,9 +95,13 @@ public class ImageListAdapter extends BaseAdapter {
 
             @Override
             public boolean onLongClick(View arg0) {
-                buttonLayout.addView(myButton);
-                positionToDelete = pos;
-                rowLayout.setBackgroundResource(R.drawable.line_delete);
+                if(!isItemSelected) {
+                    isItemSelected = true;
+                    buttonLayout.addView(myButton);
+                    positionToDelete = pos;
+                    rowLayout.setBackgroundResource(R.drawable.line_delete);
+
+                }
                 return true;
             }
         });
@@ -107,12 +112,15 @@ public class ImageListAdapter extends BaseAdapter {
     View.OnClickListener oclBtnOk = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            note = notes.get(positionToDelete);
-            notes.remove(note);
-            fileList.remove(note.getSourceFileName());
-            note.deleteFromLocalStorage();
-            notifyDataSetChanged();
-            NotesActivity.updateNoteListFile(fileList);
+
+                note = notes.get(positionToDelete);
+                notes.remove(note);
+                fileList.remove(note.getSourceFileName());
+                note.deleteFromLocalStorage();
+                notifyDataSetChanged();
+                NotesActivity.updateNoteListFile(fileList);
+                isItemSelected = false;
+
         }
     };
 

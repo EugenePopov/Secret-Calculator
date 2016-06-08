@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
-        android:background="#f3f1f1">
+        android:background="#d5d6d6">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -34,7 +34,7 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:text="welcome!"
                 android:id="@+id/textView17"
-                android:textColor="@color/accent_material_light" />
+                android:textColor="#FF43C4B0" />
         </LinearLayout>
 
         <LinearLayout
@@ -46,60 +46,24 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:weightSum="3"
-                android:layout_weight="0.75"
-                android:orientation="horizontal">
+                android:orientation="vertical"
+                android:background="#d5d6d6" >
 
-
-                <LinearLayout
-
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.75">
-
-
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1.25">
-
-
-                    <ImageButton
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/imageButton18"
-                        android:background="@drawable/button_done"
-                        android:onClick="onButtonEditClick" />
-                </LinearLayout>
-
-                <LinearLayout
-
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-
-                </LinearLayout>
+                <ImageButton
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/imageButton18"
+                    android:adjustViewBounds="true"
+                    android:nestedScrollingEnabled="false"
+                    android:scaleType="fitCenter"
+                    android:scaleY="0.5"
+                    android:scaleX="0.5"
+                    android:src="@drawable/button_done"
+                    android:onClick="onButtonDoneClick" />
             </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1.25">
-
-            </LinearLayout>
-
         </LinearLayout>
 
     </LinearLayout>
@@ -120,7 +84,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:ems="10"
+                android:id="@+id/editText3"
+                android:layout_weight="1"
+                android:textAlignment="center" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -130,7 +104,17 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="numberPassword"
+                android:ems="10"
+                android:id="@+id/editText4"
+                android:layout_weight="1"
+                android:textAlignment="center" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -140,7 +124,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText5"
+                android:layout_weight="1"
+                android:textAlignment="center" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -150,7 +142,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText6"
+                android:layout_weight="1"
+                android:textAlignment="center" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -160,7 +160,15 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="1"></LinearLayout>
+            android:layout_weight="1">
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/editText7"
+                android:layout_weight="1"
+                android:textAlignment="center" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"

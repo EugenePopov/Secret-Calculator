@@ -3,17 +3,10 @@ package com.example.eugene.secretcalculator.Classes.Calculator;
 /**
  * Created by Eugene on 25-May-16.
  */
-public class Multiplication extends CalculatorBrain {
+public class Multiplication implements Computable {
 
-    public Multiplication(){
-        firstOperand = 0;
-        secondOperand = 0;
-        operation = "";
-    }
-
-    @Override
-    public void compute(){
-        result = firstOperand * secondOperand;
+    public float compute(float firstOperand, float secondOperand){
+        return firstOperand * secondOperand;
     }
 
 }

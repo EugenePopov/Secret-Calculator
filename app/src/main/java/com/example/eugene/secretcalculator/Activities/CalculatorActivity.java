@@ -2,7 +2,6 @@ package com.example.eugene.secretcalculator.Activities;
 
 import android.content.Intent;
 import android.os.Environment;
-import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,12 +16,11 @@ import java.io.File;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 
-import static java.security.AccessController.getContext;
-
 
 public class CalculatorActivity extends AppCompatActivity {
 
-    private CalculatorBrain calculatorEntity;
+    //private Operation operation;
+    OperationContext operationContext = new OperationContext();
     private static String firstOperand = "0";
     private static String secondOperand = "";
     private static String inputOperation = " ";
@@ -40,15 +38,7 @@ public class CalculatorActivity extends AppCompatActivity {
         hideNavigationBar();
         showOnDisplay(firstOperand, inputOperation);
 
-        PasswordHash e = new PasswordHash(this);
-        try {
-             e.generateStrongPasswordHash("147258");
-        } catch (NoSuchAlgorithmException e1) {
-            e1.printStackTrace();
-        } catch (InvalidKeySpecException e1) {
-            e1.printStackTrace();
-        }
-        e.writeToFile();
+
 
     }
 
@@ -310,7 +300,8 @@ public class CalculatorActivity extends AppCompatActivity {
         isFirstOperandSet = true;
         isDotUsed = false;
         if(inputOperation.length()==1 && firstOperand.length()>0){
-            calculatorEntity = new Sum();
+            //operation = new Sum();
+            operationContext.setComputable(new Sum());
             inputOperation = inputOperation.replace(inputOperation.charAt(0), '+');
             showOnDisplay(firstOperand, inputOperation);
         }
@@ -322,7 +313,8 @@ public class CalculatorActivity extends AppCompatActivity {
         isFirstOperandSet = true;
         isDotUsed = false;
         if(inputOperation.length()==1 && firstOperand.length()>0){
-            calculatorEntity = new Subtraction();
+
+            operationContext.setComputable(new Subtraction());
             inputOperation = inputOperation.replace(inputOperation.charAt(0), '-');
             showOnDisplay(firstOperand, inputOperation);
         }
@@ -334,7 +326,7 @@ public class CalculatorActivity extends AppCompatActivity {
         isFirstOperandSet = true;
         isDotUsed = false;
         if(inputOperation.length()==1 && firstOperand.length()>0){
-            calculatorEntity = new Multiplication();
+            operationContext.setComputable(new Multiplication());
             inputOperation = inputOperation.replace(inputOperation.charAt(0), 'x');
             showOnDisplay(firstOperand, inputOperation);
         }
@@ -347,7 +339,7 @@ public class CalculatorActivity extends AppCompatActivity {
         isFirstOperandSet = true;
         isDotUsed = false;
         if(inputOperation.length()==1 && firstOperand.length()>0){
-            calculatorEntity = new Division();
+            operationContext.setComputable(new Division());
             inputOperation = inputOperation.replace(inputOperation.charAt(0), '/');
             showOnDisplay(firstOperand, inputOperation);
         }
@@ -360,7 +352,7 @@ public class CalculatorActivity extends AppCompatActivity {
         isFirstOperandSet = true;
         isDotUsed = false;
         if(inputOperation.length()==1 && firstOperand.length()>0){
-            calculatorEntity = new Percent();
+            operationContext.setComputable(new Percent());
             inputOperation = inputOperation.replace(inputOperation.charAt(0), '%');
             showOnDisplay(firstOperand, inputOperation);
         }
@@ -396,11 +388,12 @@ public class CalculatorActivity extends AppCompatActivity {
         }
         else {
             if (secondOperand.length() > 0) {
-                calculatorEntity.setFirstOperand(Float.parseFloat(firstOperand));
-                calculatorEntity.setSecondOperand(Float.parseFloat(secondOperand));
-                calculatorEntity.setOperation(inputOperation);
-                calculatorEntity.compute();
-                Float result = calculatorEntity.getResult();
+                operationContext.setFirstOperand(Float.parseFloat(firstOperand));
+                operationContext.setSecondOperand(Float.parseFloat(secondOperand));
+                operationContext.setOperation(inputOperation);
+
+
+                Float result = operationContext.executeComputable();
                 processResult(result);
                 showOnDisplay(firstOperand, inputOperation);
                 isResultObtained = true;

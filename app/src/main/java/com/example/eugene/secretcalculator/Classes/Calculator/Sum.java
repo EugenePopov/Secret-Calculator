@@ -1,16 +1,9 @@
 package com.example.eugene.secretcalculator.Classes.Calculator;
 
-public class Sum extends CalculatorBrain {
+public class Sum implements Computable {
 
-    public Sum(){
-        firstOperand = 0;
-        secondOperand = 0;
-        operation = "";
-    }
-
-    @Override
-    public void compute(){
-        result = firstOperand + secondOperand;
+    public float compute(float firstOperand, float secondOperand){
+        return firstOperand + secondOperand;
     }
 
 
