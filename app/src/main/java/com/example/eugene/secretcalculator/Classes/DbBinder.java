@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
+import android.graphics.Path;
 import android.os.AsyncTask;
 import android.os.Environment;
 
@@ -37,6 +38,10 @@ public class DbBinder {
 
     public void saveImageToDatabase(String path){
         db = context.openOrCreateDatabase("imgs.db", context.MODE_PRIVATE, null);
+        db.execSQL("create table if not exists temp (a blob, b text)");
+
+
+
         try{
             FileInputStream fis = new FileInputStream(path);
             byte [] image = new byte[fis.available()];
@@ -44,7 +49,8 @@ public class DbBinder {
 
             ContentValues values = new ContentValues();
             values.put("a", image);
-            db.insert("tb", null, values);
+            values.put("b",getFilename(path));
+            db.insert("temp", null, values);
 
             fis.close();
 
@@ -56,7 +62,7 @@ public class DbBinder {
     public void getImagesFromDatabase() {
        // Cursor c = db.rawQuery("select * from tb", null);
 
-        CreateTemporaryImageFiles tdts = new CreateTemporaryImageFiles();
+        CreateTemporaryImageFiles tdts = new CreateTemporaryImageFiles(context);
         ArrayList<String> result = null;
 
              tdts.execute();
@@ -65,7 +71,7 @@ public class DbBinder {
     }
 
 
-    private class CreateTemporaryImageFiles extends AsyncTask<Void, Void, ArrayList<String> > {
+ /*   private class CreateTemporaryImageFiles extends AsyncTask<Void, Void, ArrayList<String> > {
 
         @Override
         protected void onPreExecute() {
@@ -134,6 +140,10 @@ public class DbBinder {
             ((Activity)context).setResult(((Activity)context).RESULT_OK, CustomGalleryActivity.data);
             ((Activity)context).finish();
         }
+    }*/
+
+    private String getFilename(String path){
+        return new File(path).getName();
     }
 
 

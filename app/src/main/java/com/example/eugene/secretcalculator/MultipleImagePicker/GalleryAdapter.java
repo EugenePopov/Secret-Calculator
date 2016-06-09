@@ -18,7 +18,7 @@ public class GalleryAdapter extends BaseAdapter {
 
     private Context mContext;
     private LayoutInflater infalter;
-    private ArrayList<CustomGallery> data = new ArrayList<CustomGallery>();
+    private ArrayList<Image> data = new ArrayList<Image>();
     ImageLoader imageLoader;
 
     private boolean isActionMultiplePick;
@@ -37,7 +37,7 @@ public class GalleryAdapter extends BaseAdapter {
     }
 
     @Override
-    public CustomGallery getItem(int position) {
+    public Image getItem(int position) {
         return data.get(position);
     }
 
@@ -84,8 +84,8 @@ public class GalleryAdapter extends BaseAdapter {
         return isAnySelected;
     }
 
-    public ArrayList<CustomGallery> getSelected() {
-        ArrayList<CustomGallery> dataT = new ArrayList<CustomGallery>();
+    public ArrayList<Image> getSelected() {
+        ArrayList<Image> dataT = new ArrayList<Image>();
 
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i).isSeleted) {
@@ -96,7 +96,7 @@ public class GalleryAdapter extends BaseAdapter {
         return dataT;
     }
 
-    public void addAll(ArrayList<CustomGallery> files) {
+    public void addAll(ArrayList<Image> files) {
 
         try {
             this.data.clear();
@@ -150,7 +150,7 @@ public class GalleryAdapter extends BaseAdapter {
 
         try {
 
-            imageLoader.displayImage("file://" + data.get(position).sdcardPath,
+            imageLoader.displayImage("file://" + data.get(position).getSdcardPath(),
                     holder.imgQueue, new SimpleImageLoadingListener() {
                         @Override
                         public void onLoadingStarted(String imageUri, View view) {

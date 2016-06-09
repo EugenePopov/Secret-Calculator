@@ -7,7 +7,6 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -20,14 +19,13 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.Window;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ViewSwitcher;
 
-import com.example.eugene.secretcalculator.Classes.CreateTemporaryImageFiles;
 import com.example.eugene.secretcalculator.MultipleImagePicker.Action;
-import com.example.eugene.secretcalculator.MultipleImagePicker.CustomGallery;
-import com.example.eugene.secretcalculator.MultipleImagePicker.CustomGalleryActivity;
+import com.example.eugene.secretcalculator.MultipleImagePicker.Image;
 import com.example.eugene.secretcalculator.MultipleImagePicker.GalleryAdapter;
 import com.example.eugene.secretcalculator.MultipleImagePicker.Utility;
 import com.example.eugene.secretcalculator.R;
@@ -45,7 +43,7 @@ public class AlbumActivity extends AppCompatActivity {
     SQLiteDatabase db ;
 
     ImageButton btnGalleryPickMul;
-    ArrayList<CustomGallery> imageList = new ArrayList<>();
+    ArrayList<Image> imageList = new ArrayList<>();
     ArrayList<String> imagePathList = new ArrayList<>();
 
     ViewSwitcher viewSwitcher;
@@ -117,6 +115,19 @@ public class AlbumActivity extends AppCompatActivity {
             }
         });
 
+        gridGallery.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View v,
+                                    int position, long id) {
+
+                String imagePath = imagePathList.get(position);
+                Intent intent = new Intent(AlbumActivity.this, FullsizeImageActivity.class);
+                intent.putExtra("string", imagePath);
+                startActivity(intent);
+
+            }
+        });
+
     }
 
     public void onButtonBackClick(View view){
@@ -132,10 +143,11 @@ public class AlbumActivity extends AppCompatActivity {
             String[] selectedImages = data.getStringArrayExtra("selectedImages");
 
             for (String string : selectedImages) {
-                CustomGallery item = new CustomGallery();
-                item.sdcardPath = string;
+                Image item = new Image();
+                item.setSdcardPath(string);
 
                 imageList.add(item);
+                imagePathList.add(item.getSdcardPath());
             }
 
             viewSwitcher.setDisplayedChild(0);
@@ -149,7 +161,7 @@ public class AlbumActivity extends AppCompatActivity {
     }
 
     private void deleteTemporaryFolder(){
-        File dir = new File(Environment.getExternalStorageDirectory()+"/SecCalc/Media/");
+        File dir = new File(Environment.getExternalStorageDirectory()+"/SecCalc/Media/thumbnails/");
 
             String[] children = dir.list();
             for (int i = 0; i < children.length; i++)
@@ -160,9 +172,8 @@ public class AlbumActivity extends AppCompatActivity {
 
     private void initializeContext(){
 
-
             db = this.openOrCreateDatabase("imgs.db", this.MODE_PRIVATE, null);
-            db.execSQL("create table if not exists tb (a blob)");
+            db.execSQL("create table if not exists tb (a blob, b text)");
             populateImageList t = new populateImageList();
             t.execute();
     }
@@ -188,18 +199,15 @@ public class AlbumActivity extends AppCompatActivity {
         @Override
         protected ArrayList<String> doInBackground(Void... params) {
             File directory = getDirectoryPath();
-            //ArrayList<String> imageList = new ArrayList<>();
 
-            int imageNumber = 0;
             Cursor c = db.rawQuery("select * from tb", null);
-
 
             if (c.moveToFirst()) {
                 do {
                     byte[] blob = c.getBlob(c.getColumnIndex("a"));
-                    File imagePath = new File(directory, String.format("thumb%s.jpg", imageNumber++));
+                    String filename = c.getString(c.getColumnIndex("b"));
+                    File imagePath = new File(directory, filename);
                     imagePathList.add(imagePath.getPath());
-                    // Bitmap bmp = Bitmap.createScaledBitmap(Utility.getPhoto(blob), thumbnailWidth, thumbnailHeight, false);
                     saveToFile(imagePath.getPath(), Utility.getPhoto(blob));
                 } while (c.moveToNext());
             }
@@ -233,6 +241,7 @@ public class AlbumActivity extends AppCompatActivity {
         protected void onPostExecute(ArrayList<String> result) {
             imagePathList = result;
             mProgressDialog.dismiss();
+            db.close();
             updateGridView();
 
 
@@ -242,8 +251,8 @@ public class AlbumActivity extends AppCompatActivity {
     public void updateGridView(){
 
         for (String string : imagePathList) {
-            CustomGallery item = new CustomGallery();
-            item.sdcardPath = string;
+            Image item = new Image();
+            item.setSdcardPath(string);
 
             imageList.add(item);
         }

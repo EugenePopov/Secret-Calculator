@@ -37,4 +37,8 @@ Vivamus non nisl quis mi blandit cursus. Nam neque libero, ultrices sit amet fel
     <string name="title_activity_media">MediaActivity</string>
 
     <string name="title_activity_first_launch">FirstLaunchActivity</string>
+
+    <string name="title_activity_fullsize_image">FullsizeImageActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
 </resources>

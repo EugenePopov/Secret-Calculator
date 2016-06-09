@@ -17,18 +17,16 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 
-/**
- * Created by Eugene on 08-Jun-16.
- */
+
 public class CreateTemporaryImageFiles extends AsyncTask<Void, Void, ArrayList<String> > {
 
     public static ProgressDialog mProgressDialog;
     Context context;
     SQLiteDatabase db;
 
-    public CreateTemporaryImageFiles(Context context, SQLiteDatabase db){
+    public CreateTemporaryImageFiles(Context context){
         this.context = context;
-        this.db = db;
+        db = context.openOrCreateDatabase("imgs.db", context.MODE_PRIVATE, null);
     }
 
     @Override
@@ -46,21 +44,22 @@ public class CreateTemporaryImageFiles extends AsyncTask<Void, Void, ArrayList<S
         File directory = getDirectoryPath();
         ArrayList<String> imageList = new ArrayList<>();
 
-        int imageNumber = 0;
-        Cursor c = db.rawQuery("select * from tb", null);
+        Cursor c = db.rawQuery("select * from temp", null);
 
 
         if (c.moveToFirst()) {
             do {
                 byte[] blob = c.getBlob(c.getColumnIndex("a"));
-                File imagePath = new File(directory, String.format("thumb%s.jpg", imageNumber++));
+                String filename = c.getString(c.getColumnIndex("b"));
+                File imagePath = new File(directory,filename);
                 imageList.add(imagePath.getPath());
-                // Bitmap bmp = Bitmap.createScaledBitmap(Utility.getPhoto(blob), thumbnailWidth, thumbnailHeight, false);
                 saveToFile(imagePath.getPath(), Utility.getPhoto(blob));
             } while (c.moveToNext());
         }
         c.close();
-
+        db.execSQL("insert into tb select * from temp");
+        db.execSQL("DROP TABLE IF EXISTS temp");
+        db.close();
         return imageList;
     }
 

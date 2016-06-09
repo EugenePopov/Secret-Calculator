@@ -144,11 +144,11 @@ public class CustomGalleryActivity extends AppCompatActivity {
 
         @Override
         public void onClick(View v) {
-            ArrayList<CustomGallery> selected = adapter.getSelected();
+            ArrayList<Image> selected = adapter.getSelected();
 
             String[] selectedImages = new String[selected.size()];
             for (int i = 0; i < selectedImages.length; i++) {
-                selectedImages[i] = selected.get(i).sdcardPath;
+                selectedImages[i] = selected.get(i).getSdcardPath();
             }
 
             /** Save images in database**/
@@ -172,8 +172,8 @@ public class CustomGalleryActivity extends AppCompatActivity {
 
 
 
-    private ArrayList<CustomGallery> getGalleryPhotos() {
-        ArrayList<CustomGallery> galleryList = new ArrayList<CustomGallery>();
+    private ArrayList<Image> getGalleryPhotos() {
+        ArrayList<Image> galleryList = new ArrayList<Image>();
 
         try {
             final String[] columns = { MediaStore.Images.Media.DATA,
@@ -187,12 +187,12 @@ public class CustomGalleryActivity extends AppCompatActivity {
             if (imagecursor != null && imagecursor.getCount() > 0) {
 
                 while (imagecursor.moveToNext()) {
-                    CustomGallery item = new CustomGallery();
+                    Image item = new Image();
 
                     int dataColumnIndex = imagecursor
                             .getColumnIndex(MediaStore.Images.Media.DATA);
 
-                    item.sdcardPath = imagecursor.getString(dataColumnIndex);
+                    item.setSdcardPath(imagecursor.getString(dataColumnIndex));
 
                     galleryList.add(item);
                 }

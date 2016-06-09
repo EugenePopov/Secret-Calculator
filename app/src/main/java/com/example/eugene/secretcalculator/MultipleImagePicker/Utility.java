@@ -16,6 +16,8 @@ public class Utility {
 
     // convert from byte array to bitmap
     public static Bitmap getPhoto(byte[] image) {
-        return BitmapFactory.decodeByteArray(image, 0, image.length);
+        BitmapFactory.Options options=new BitmapFactory.Options();// Create object of bitmapfactory's option method for further option use
+        options.inPurgeable = true; // inPurgeable is used to free up memory while required
+        return BitmapFactory.decodeByteArray(image, 0, image.length, options);
     }
 }

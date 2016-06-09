@@ -1,6 +1,7 @@
 package com.example.eugene.secretcalculator.MultipleImagePicker;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
@@ -14,6 +15,10 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+import com.example.eugene.secretcalculator.Activities.FullsizeImageActivity;
+import com.example.eugene.secretcalculator.Activities.ListItemNoteActivity;
+import com.example.eugene.secretcalculator.Activities.NotesActivity;
+import com.example.eugene.secretcalculator.Classes.Note;
 import com.example.eugene.secretcalculator.R;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
@@ -23,6 +28,7 @@ import java.util.List;
 public class AlbumActivityAdapter extends BaseAdapter {
     private Context mContext;
     ArrayList<String> images;
+    String imagePath;
     // Gets the context so it can be used later
     public AlbumActivityAdapter(Context c, ArrayList<String> images) {
         mContext = c;
@@ -52,7 +58,7 @@ public class AlbumActivityAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(85, 85));
+            imageView.setLayoutParams(new GridView.LayoutParams(150, 150));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8, 8, 8);
         } else {
@@ -60,8 +66,12 @@ public class AlbumActivityAdapter extends BaseAdapter {
         }
 
         imageView.setImageURI(Uri.parse(images.get(position)));
+
         return imageView;
     }
+
+
+
 
 
 
