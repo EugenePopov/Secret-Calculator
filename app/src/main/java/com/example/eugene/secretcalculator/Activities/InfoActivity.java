@@ -5,8 +5,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-
-import com.example.eugene.secretcalculator.Classes.Note;
 import com.example.eugene.secretcalculator.Classes.SharedData;
 import com.example.eugene.secretcalculator.R;
 

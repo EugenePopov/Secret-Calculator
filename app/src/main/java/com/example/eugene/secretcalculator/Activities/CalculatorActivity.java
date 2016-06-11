@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.TextView;
 import com.example.eugene.secretcalculator.Classes.Calculator.*;
-import com.example.eugene.secretcalculator.Classes.PasswordHash;
+import com.example.eugene.secretcalculator.Classes.PasswordHashGenerator;
 import com.example.eugene.secretcalculator.Classes.SharedData;
 import com.example.eugene.secretcalculator.R;
 import java.io.File;
@@ -379,7 +379,7 @@ public class CalculatorActivity extends AppCompatActivity {
     }
 
     public void onButtonEqualClick(View view) throws InvalidKeySpecException, NoSuchAlgorithmException {
-        PasswordHash e = new PasswordHash(this);
+        PasswordHashGenerator e = new PasswordHashGenerator(this);
         if(e.compareStrings(getPassword())){
             inputBuffer = "0";
             firstOperand = "0";

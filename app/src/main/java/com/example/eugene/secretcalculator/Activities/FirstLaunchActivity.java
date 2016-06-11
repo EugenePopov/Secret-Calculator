@@ -6,10 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.eugene.secretcalculator.Classes.PasswordHash;
+import com.example.eugene.secretcalculator.Classes.PasswordHashGenerator;
 import com.example.eugene.secretcalculator.R;
 
 import java.security.NoSuchAlgorithmException;
@@ -54,7 +53,7 @@ public class FirstLaunchActivity extends AppCompatActivity {
         sSecretAnswer = secretAnswer.getText().toString();
 
         if(isFormOk()) {
-            PasswordHash e = new PasswordHash(this);
+            PasswordHashGenerator e = new PasswordHashGenerator(this);
             try {
                 e.generateStrongPasswordHash(sPassword);
             } catch (NoSuchAlgorithmException e1) {

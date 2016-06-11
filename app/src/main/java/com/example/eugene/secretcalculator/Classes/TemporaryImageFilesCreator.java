@@ -18,13 +18,13 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 
-public class CreateTemporaryImageFiles extends AsyncTask<Void, Void, ArrayList<String> > {
+public class TemporaryImageFilesCreator extends AsyncTask<Void, Void, ArrayList<String> > {
 
     public static ProgressDialog mProgressDialog;
     Context context;
     SQLiteDatabase db;
 
-    public CreateTemporaryImageFiles(Context context){
+    public TemporaryImageFilesCreator(Context context){
         this.context = context;
         db = context.openOrCreateDatabase("imgs.db", context.MODE_PRIVATE, null);
     }
@@ -42,8 +42,7 @@ public class CreateTemporaryImageFiles extends AsyncTask<Void, Void, ArrayList<S
     @Override
     protected ArrayList<String> doInBackground(Void... params) {
         File directory = getDirectoryPath();
-        ArrayList<String> imageList = new ArrayList<>();
-
+        ArrayList<String> imageList = new ArrayList<String>();
         Cursor c = db.rawQuery("select * from temp", null);
 
 

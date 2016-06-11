@@ -19,12 +19,12 @@ import javax.crypto.spec.PBEKeySpec;
 
 
 
-public class PasswordHash {
+public class PasswordHashGenerator {
 
     private Context context;
     private String encryptedString = " ";
 
-    public PasswordHash(Context context){
+    public PasswordHashGenerator(Context context){
         this.context = context;
     }
 
