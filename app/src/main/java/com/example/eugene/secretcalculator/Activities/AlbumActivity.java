@@ -1,10 +1,8 @@
 package com.example.eugene.secretcalculator.Activities;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -23,7 +21,6 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageButton;
 import android.widget.ViewSwitcher;
-
 import com.example.eugene.secretcalculator.MultipleImagePicker.Action;
 import com.example.eugene.secretcalculator.MultipleImagePicker.Image;
 import com.example.eugene.secretcalculator.MultipleImagePicker.GalleryAdapter;
