@@ -30,7 +30,9 @@ public class FirstLaunchActivity extends AppCompatActivity {
     String sSecretQuestion;
     String sSecretAnswer;
     String error;
-    public static final String NETWORK_ERROR = "You need a network connection for the first launch of the application. Please turn on mobile network or Wi-Fi in Settings.";
+    private static final String PASSWORD_ERROR = "Passwords are not identical!";
+    private static final String FIELDS_ERROR = "Fill all the fields!";
+    private static final String NETWORK_ERROR = "You need a network connection for the first launch of the application. Please turn on mobile network or Wi-Fi in Settings.";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +48,9 @@ public class FirstLaunchActivity extends AppCompatActivity {
 
     private void hideNavigationBar() {
         ActionBar actionBar = getSupportActionBar();
-        actionBar.hide();
+        if(actionBar!=null) {
+            actionBar.hide();
+        }
     }
 
     public void onButtonDoneClick(View view) throws IOException, ExecutionException, InterruptedException {
@@ -58,11 +62,21 @@ public class FirstLaunchActivity extends AppCompatActivity {
         EditText secretAnswer = (EditText)findViewById(R.id.editText7);
 
 
-        sPassword = password.getText().toString();
-        sRepeatedPassword = repeatedPassword.getText().toString();
-        sEmail = email.getText().toString();
-        sSecretQuestion = secretQuestion.getText().toString();
-        sSecretAnswer = secretAnswer.getText().toString();
+        if(password!=null) {
+            sPassword = password.getText().toString();
+        }
+        if(repeatedPassword!=null) {
+            sRepeatedPassword = repeatedPassword.getText().toString();
+        }
+        if(email!=null) {
+            sEmail = email.getText().toString();
+        }
+        if(secretQuestion!=null) {
+            sSecretQuestion = secretQuestion.getText().toString();
+        }
+        if(secretAnswer!=null) {
+            sSecretAnswer = secretAnswer.getText().toString();
+        }
 
         if(isFormOk()) {
 
@@ -98,7 +112,7 @@ public class FirstLaunchActivity extends AppCompatActivity {
     private boolean arePasswordsIdentical(){
         if(sPassword.equals(sRepeatedPassword))return true;
         else{
-            error = "Passwords are not identical !";
+            error = PASSWORD_ERROR;
             return false;
         }
     }
@@ -106,7 +120,7 @@ public class FirstLaunchActivity extends AppCompatActivity {
     private boolean isAllDataTyped(){
         if(!sPassword.isEmpty()&&!sRepeatedPassword.isEmpty()&&!sEmail.isEmpty()&&!sSecretQuestion.isEmpty()&&!sSecretAnswer.isEmpty())return true;
         else{
-            error = "Fill all the fields !";
+            error = FIELDS_ERROR;
             return false;
         }
     }
