@@ -1,8 +1,6 @@
 package com.example.eugene.secretcalculator.Classes.Calculator;
 
-/**
- * Created by Eugene on 08-Jun-16.
- */
+
 public class OperationContext {
     private Computable computable;
 

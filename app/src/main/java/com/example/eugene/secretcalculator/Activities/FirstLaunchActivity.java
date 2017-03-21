@@ -5,18 +5,29 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.provider.Settings;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 import com.example.eugene.secretcalculator.Classes.PasswordHashGenerator;
+import com.example.eugene.secretcalculator.Kairos.KairosService;
 import com.example.eugene.secretcalculator.MailClient.Client;
 import com.example.eugene.secretcalculator.R;
+
+import org.apache.commons.lang3.RandomStringUtils;
+import org.json.JSONException;
+
+import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.concurrent.ExecutionException;
@@ -54,12 +65,12 @@ public class FirstLaunchActivity extends AppCompatActivity {
     }
 
     public void onButtonDoneClick(View view) throws IOException, ExecutionException, InterruptedException {
-        Client c= new Client();
+        //Client c= new Client();
         EditText password = (EditText)findViewById(R.id.editText3);
         EditText repeatedPassword = (EditText)findViewById(R.id.editText4);
-        EditText email = (EditText)findViewById(R.id.editText5);
-        EditText secretQuestion = (EditText)findViewById(R.id.editText6);
-        EditText secretAnswer = (EditText)findViewById(R.id.editText7);
+        //EditText email = (EditText)findViewById(R.id.editText5);
+        //EditText secretQuestion = (EditText)findViewById(R.id.editText6);
+        //EditText secretAnswer = (EditText)findViewById(R.id.editText7);
 
 
         if(password!=null) {
@@ -68,7 +79,7 @@ public class FirstLaunchActivity extends AppCompatActivity {
         if(repeatedPassword!=null) {
             sRepeatedPassword = repeatedPassword.getText().toString();
         }
-        if(email!=null) {
+/*        if(email!=null) {
             sEmail = email.getText().toString();
         }
         if(secretQuestion!=null) {
@@ -76,7 +87,7 @@ public class FirstLaunchActivity extends AppCompatActivity {
         }
         if(secretAnswer!=null) {
             sSecretAnswer = secretAnswer.getText().toString();
-        }
+        }*/
 
         if(isFormOk()) {
 
@@ -88,15 +99,12 @@ public class FirstLaunchActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            String test = c.execute(toServer).get();
-
-            Toast.makeText(this, test,
-                    Toast.LENGTH_LONG).show();
 
             gen.writeToFile();
-            Intent intent = new Intent(this, CalculatorActivity.class);
+            takePhoto();
+/*            Intent intent = new Intent(this, CalculatorActivity.class);
             startActivity(intent);
-            finish();
+            finish();*/
         }
         else{
             Toast.makeText(this, error,
@@ -118,7 +126,7 @@ public class FirstLaunchActivity extends AppCompatActivity {
     }
 
     private boolean isAllDataTyped(){
-        if(!sPassword.isEmpty()&&!sRepeatedPassword.isEmpty()&&!sEmail.isEmpty()&&!sSecretQuestion.isEmpty()&&!sSecretAnswer.isEmpty())return true;
+        if(!sPassword.isEmpty()&&!sRepeatedPassword.isEmpty())return true;
         else{
             error = FIELDS_ERROR;
             return false;
@@ -156,6 +164,47 @@ public class FirstLaunchActivity extends AppCompatActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    private void takePhoto(){
+        int TAKE_PHOTO_CODE = 0;
+
+        //final String dir = Environment.getDataDirectory() + "/userFolder/";
+        final String dir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/userPhotos/";
+        File newdir = new File(dir);
+        newdir.mkdirs();
+        String file = dir+"user.jpg";
+        File newfile = new File(file);
+        try {
+            newfile.createNewFile();
+        }
+        catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        Uri outputFileUri = Uri.fromFile(newfile);
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, outputFileUri);
+
+        startActivityForResult(cameraIntent, TAKE_PHOTO_CODE);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        KairosService ks = new KairosService(this);
+        try {
+            ks.registerUserPhoto();
+        } catch (UnsupportedEncodingException | JSONException e) {
+            e.printStackTrace();
+        }
+
+        Intent intent = new Intent(this, CalculatorActivity.class);
+        startActivity(intent);
+
+    }
+
 
 
 }

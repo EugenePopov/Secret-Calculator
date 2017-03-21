@@ -368,7 +368,7 @@ public class CalculatorActivity extends AppCompatActivity {
             inputOperation = " ";
         }
         if (secondOperand.length() > 0 ) {
-            secondOperand = "";
+            secondOperand = "0";
         }
 
         isDotUsed = false;
